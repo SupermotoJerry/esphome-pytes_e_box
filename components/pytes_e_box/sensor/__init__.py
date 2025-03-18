@@ -21,7 +21,7 @@ from esphome.const import (
     )
 
 from .. import (pytes_e_box_ns ,CONF_PYTES_E_BOX_ID, PYTES_E_BOX_COMPONENT_SCHEMA, CONF_CELL, PytesEBoxBatteryCellSensor, PytesEBoxBatterySensor,
-                CONF_BATTERY, CONF_CELL_ARRAYS, CV_NUM_CELLS, CV_NUM_BATTERIES, UNIT_AMPERE_HOURS
+                CONF_BATTERY, CONF_CELL_ARRAYS, CV_NUM_CELLS, CV_NUM_BATTERIES, UNIT_AMPERE_HOURS, UNIT_MILLI_AMPERE
                 )
 
 
@@ -39,11 +39,13 @@ CONF_TOTAL_POWER_IN     = "total_power_in"
 CONF_TOTAL_POWER_OUT    = "total_power_out"
 CONF_WORK_STATUS        = "work_status"
 CONF_CELLS              = "cell_count"
+CONF_DEV_DATETIME       = "dev_datetime"
 
 CONF_CELL_VOLTAGE       = "voltage"
 CONF_CELL_TEMPERATURE   = "temperature"
 CONF_CELL_COULOMB       = "coulomb"
 CONF_CELL_CURRENT       = "current"
+
 
 
 BAT_TYPES: dict[str, cv.Schema] = {
@@ -55,7 +57,7 @@ BAT_TYPES: dict[str, cv.Schema] = {
     ),
     CONF_CURRENT: sensor.sensor_schema(
         #PytesEBoxBatterySensor,
-        unit_of_measurement=UNIT_AMPERE,
+        unit_of_measurement=UNIT_MILLI_AMPERE,
         accuracy_decimals=3,
         device_class=DEVICE_CLASS_CURRENT,
     ),
@@ -139,6 +141,14 @@ BAT_TYPES: dict[str, cv.Schema] = {
         state_class=STATE_CLASS_MEASUREMENT,
         accuracy_decimals=3,
     ),
+    CONF_DEV_DATETIME: sensor.sensor_schema(
+        #PytesEBoxBatterySensor,
+        unit_of_measurement=UNIT_AMPERE_HOURS,
+        device_class=DEVICE_CLASS_EMPTY,
+        state_class=STATE_CLASS_MEASUREMENT,
+        accuracy_decimals=3,
+    ),
+ 
 }
 
 CELL_TYPES: dict[str, cv.Schema] = {
@@ -150,7 +160,7 @@ CELL_TYPES: dict[str, cv.Schema] = {
     ),
     CONF_CURRENT: sensor.sensor_schema(
         #PytesEBoxBatteryCellSensor,
-        unit_of_measurement=UNIT_AMPERE,
+        unit_of_measurement=UNIT_MILLI_AMPERE,
         accuracy_decimals=3,
         device_class=DEVICE_CLASS_CURRENT,
     ),
