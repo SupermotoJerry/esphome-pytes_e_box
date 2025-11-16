@@ -28,7 +28,7 @@ void PytesEBoxComponent::dump_config() {
   ESP_LOGCONFIG(TAG, "PytesEBox:");
   ESP_LOGCONFIG(TAG, "  Batteries: %d", this->battaries_in_system_);
   ESP_LOGCONFIG(TAG, "  Poll Timeout: %d", this->polling_timeout_);  
-  ESP_LOGCONFIG(TAG, "  Commands in Queue: %d", this->cmd_queue_.size()+1); //Index start at zero. 
+  ESP_LOGCONFIG(TAG, "  Commands in Queue: %d", this->cmd_queue_.size()); 
   
 
   /*
@@ -184,7 +184,7 @@ void PytesEBoxComponent::loop() {
       }
       */
       const char *command = this->cmd_queue_[this->command_queue_position_].command.c_str();
-      ESP_LOGE(TAG, "Timeout on command '%s': retry %d, elapsed %lu ms.",
+      ESP_LOGE(TAG, "Timeout on command '%s': retry %d, elapsed %lu ms. UART Buffer: %s",
            this->cmd_queue_[this->command_queue_position_].command.c_str(),
            this->command_retries_,
            elapsed);
