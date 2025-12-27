@@ -13,7 +13,7 @@ esp32:
     type: esp-idf
 
 external_components:
-  - source: github://oxynatOr/esphome-pytes_e_box@main
+  - source: github://SupermotoJerry/esphome-pytes_e_box@main
     components: [ pytes_e_box ]
     refresh: 5s
 
@@ -62,7 +62,7 @@ uart:
 
 # mkdir packages inside the same directory as where you find all of esphome .yaml files
 # copy pytesebox-monitor.yaml and put inside your newly created packages directory
-# for exampl my esphome is a docker container inside my opt directory 
+# for example my esphome is a docker container inside my opt directory 
 # /opt/esphome/packages/pytesebox-monitor.yaml
 packages:
   # First E-Box Stack (uart01, pvbatt01) - batteries 1-5
