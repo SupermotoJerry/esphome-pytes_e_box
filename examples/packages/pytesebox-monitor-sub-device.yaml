@@ -5,574 +5,574 @@ text_sensor:
     cells:
       - cell: 0
         base_state:
-          name: "${cell_prefix} ${battery_num}.0 Base State"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.0 Base State"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
           filters:
             - map:
               - Dischg -> Discharge
         voltage_state:
-          device_id: battery_${battery_num}
-          name: "${cell_prefix} ${battery_num}.0 Voltage State"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.0 Voltage State"
         current_state:
-          device_id: battery_${battery_num}
-          name: "${cell_prefix} ${battery_num}.0 Current State"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.0 Current State"
         temperature_state:
-          device_id: battery_${battery_num}
-          name: "${cell_prefix} ${battery_num}.0 Temperature State"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.0 Temperature State"
       - cell: 1
         base_state:
-          name: "${cell_prefix} ${battery_num}.1 Base State"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.1 Base State"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
           filters:
             - map:
               - Dischg -> Discharge
         voltage_state:
-          name: "${cell_prefix} ${battery_num}.1 Voltage State"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.1 Voltage State"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         current_state:
-          name: "${cell_prefix} ${battery_num}.1 Current State"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.1 Current State"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         temperature_state:
-          name: "${cell_prefix} ${battery_num}.1 Temperature State"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.1 Temperature State"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
       - cell: 2
         base_state:
-          name: "${cell_prefix} ${battery_num}.2 Base State"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.2 Base State"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
           filters:
             - map:
               - Dischg -> Discharge
         voltage_state:
-          name: "${cell_prefix} ${battery_num}.2 Voltage State"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.2 Voltage State"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         current_state:
-          name: "${cell_prefix} ${battery_num}.2 Current State"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.2 Current State"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         temperature_state:
-          name: "${cell_prefix} ${battery_num}.2 Temperature State"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.2 Temperature State"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
       - cell: 3
         base_state:
-          name: "${cell_prefix} ${battery_num}.3 Base State"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.3 Base State"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
           filters:
             - map:
               - Dischg -> Discharge
         voltage_state:
-          name: "${cell_prefix} ${battery_num}.3 Voltage State"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.3 Voltage State"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         current_state:
-          name: "${cell_prefix} ${battery_num}.3 Current State"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.3 Current State"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         temperature_state:
-          name: "${cell_prefix} ${battery_num}.3 Temperature State"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.3 Temperature State"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
       - cell: 4
         base_state:
-          name: "${cell_prefix} ${battery_num}.4 Base State"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.4 Base State"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
           filters:
             - map:
               - Dischg -> Discharge
         voltage_state:
-          name: "${cell_prefix} ${battery_num}.4 Voltage State"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.4 Voltage State"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         current_state:
-          name: "${cell_prefix} ${battery_num}.4 Current State"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.4 Current State"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         temperature_state:
-          name: "${cell_prefix} ${battery_num}.4 Temperature State"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.4 Temperature State"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
       - cell: 5
         base_state:
-          name: "${cell_prefix} ${battery_num}.5 Base State"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.5 Base State"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
           filters:
             - map:
               - Dischg -> Discharge
         voltage_state:
-          name: "${cell_prefix} ${battery_num}.5 Voltage State"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.5 Voltage State"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         current_state:
-          name: "${cell_prefix} ${battery_num}.5 Current State"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.5 Current State"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         temperature_state:
-          name: "${cell_prefix} ${battery_num}.5 Temperature State"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.5 Temperature State"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
       - cell: 6
         base_state:
-          name: "${cell_prefix} ${battery_num}.6 Base State"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.6 Base State"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
           filters:
             - map:
               - Dischg -> Discharge
         voltage_state:
-          name: "${cell_prefix} ${battery_num}.6 Voltage State"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.6 Voltage State"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         current_state:
-          name: "${cell_prefix} ${battery_num}.6 Current State"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.6 Current State"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         temperature_state:
-          name: "${cell_prefix} ${battery_num}.6 Temperature State"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.6 Temperature State"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
       - cell: 7
         base_state:
-          name: "${cell_prefix} ${battery_num}.7 Base State"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.7 Base State"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
           filters:
             - map:
               - Dischg -> Discharge
         voltage_state:
-          name: "${cell_prefix} ${battery_num}.7 Voltage State"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.7 Voltage State"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         current_state:
-          name: "${cell_prefix} ${battery_num}.7 Current State"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.7 Current State"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         temperature_state:
-          name: "${cell_prefix} ${battery_num}.7 Temperature State"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.7 Temperature State"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
       - cell: 8
         base_state:
-          name: "${cell_prefix} ${battery_num}.8 Base State"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.8 Base State"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
           filters:
             - map:
               - Dischg -> Discharge
         voltage_state:
-          name: "${cell_prefix} ${battery_num}.8 Voltage State"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.8 Voltage State"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         current_state:
-          name: "${cell_prefix} ${battery_num}.8 Current State"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.8 Current State"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         temperature_state:
-          name: "${cell_prefix} ${battery_num}.8 Temperature State"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.8 Temperature State"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
       - cell: 9
         base_state:
-          name: "${cell_prefix} ${battery_num}.9 Base State"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.9 Base State"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
           filters:
             - map:
               - Dischg -> Discharge
         voltage_state:
-          name: "${cell_prefix} ${battery_num}.9 Voltage State"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.9 Voltage State"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         current_state:
-          name: "${cell_prefix} ${battery_num}.9 Current State"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.9 Current State"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         temperature_state:
-          name: "${cell_prefix} ${battery_num}.9 Temperature State"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.9 Temperature State"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
       - cell: 10
         base_state:
-          name: "${cell_prefix} ${battery_num}.10 Base State"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.10 Base State"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
           filters:
             - map:
               - Dischg -> Discharge
         voltage_state:
-          name: "${cell_prefix} ${battery_num}.10 Voltage State"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.10 Voltage State"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         current_state:
-          name: "${cell_prefix} ${battery_num}.10 Current State"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.10 Current State"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         temperature_state:
-          name: "${cell_prefix} ${battery_num}.10 Temperature State"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.10 Temperature State"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
       - cell: 11
         base_state:
-          name: "${cell_prefix} ${battery_num}.11 Base State"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.11 Base State"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
           filters:
             - map:
               - Dischg -> Discharge
         voltage_state:
-          name: "${cell_prefix} ${battery_num}.11 Voltage State"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.11 Voltage State"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         current_state:
-          name: "${cell_prefix} ${battery_num}.11 Current State"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.11 Current State"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         temperature_state:
-          name: "${cell_prefix} ${battery_num}.11 Temperature State"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.11 Temperature State"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
       - cell: 12
         base_state:
-          name: "${cell_prefix} ${battery_num}.12 Base State"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.12 Base State"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
           filters:
             - map:
               - Dischg -> Discharge
         voltage_state:
-          name: "${cell_prefix} ${battery_num}.12 Voltage State"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.12 Voltage State"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         current_state:
-          name: "${cell_prefix} ${battery_num}.12 Current State"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.12 Current State"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         temperature_state:
-          name: "${cell_prefix} ${battery_num}.12 Temperature State"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.12 Temperature State"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
       - cell: 13
         base_state:
-          name: "${cell_prefix} ${battery_num}.13 Base State"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.13 Base State"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
           filters:
             - map:
               - Dischg -> Discharge
         voltage_state:
-          name: "${cell_prefix} ${battery_num}.13 Voltage State"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.13 Voltage State"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         current_state:
-          name: "${cell_prefix} ${battery_num}.13 Current State"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.13 Current State"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         temperature_state:
-          name: "${cell_prefix} ${battery_num}.13 Temperature State"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.13 Temperature State"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
       - cell: 14
         base_state:
-          name: "${cell_prefix} ${battery_num}.14 Base State"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.14 Base State"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
           filters:
             - map:
               - Dischg -> Discharge
         voltage_state:
-          name: "${cell_prefix} ${battery_num}.14 Voltage State"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.14 Voltage State"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         current_state:
-          name: "${cell_prefix} ${battery_num}.14 Current State"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.14 Current State"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         temperature_state:
-          name: "${cell_prefix} ${battery_num}.14 Temperature State"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.14 Temperature State"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
       - cell: 15
         base_state:
-          name: "${cell_prefix} ${battery_num}.15 Base State"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.15 Base State"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
           filters:
             - map:
               - Dischg -> Discharge
         voltage_state:
-          name: "${cell_prefix} ${battery_num}.15 Voltage State"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.15 Voltage State"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         current_state:
-          name: "${cell_prefix} ${battery_num}.15 Current State"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.15 Current State"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         temperature_state:
-          name: "${cell_prefix} ${battery_num}.15 Temperature State"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.15 Temperature State"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
     base_state:
-      name: "${battery_prefix} ${battery_num} Base State"
-      device_id: battery_${battery_num}
+      name: "${pytes_e_box_id} ${battery_prefix} ${battery_num} Base State"
+      device_id: ${pytes_e_box_id}_battery_${battery_num}
       filters:
         - map:
-          - Dischg -> Discharge      
+          - Dischg -> Discharge
     voltage_state:
-      name: "${battery_prefix} ${battery_num} Voltage State"
-      device_id: battery_${battery_num}
+      name: "${pytes_e_box_id} ${battery_prefix} ${battery_num} Voltage State"
+      device_id: ${pytes_e_box_id}_battery_${battery_num}
     current_state:
-      name: "${battery_prefix} ${battery_num} Current State"
-      device_id: battery_${battery_num}
+      name: "${pytes_e_box_id} ${battery_prefix} ${battery_num} Current State"
+      device_id: ${pytes_e_box_id}_battery_${battery_num}
     temperature_state:
-      name: "${battery_prefix} ${battery_num} Temperature State"
-      device_id: battery_${battery_num}
+      name: "${pytes_e_box_id} ${battery_prefix} ${battery_num} Temperature State"
+      device_id: ${pytes_e_box_id}_battery_${battery_num}
     barcode:
-      name: "${battery_prefix} ${battery_num} Barcode"
-      device_id: battery_${battery_num}
+      name: "${pytes_e_box_id} ${battery_prefix} ${battery_num} Barcode"
+      device_id: ${pytes_e_box_id}_battery_${battery_num}
     dev_type:
-      name: "${battery_prefix} ${battery_num} Device Type"
-      device_id: battery_${battery_num}
+      name: "${pytes_e_box_id} ${battery_prefix} ${battery_num} Device Type"
+      device_id: ${pytes_e_box_id}_battery_${battery_num}
     firm_version:
-      name: "${battery_prefix} ${battery_num} Firm Version"
-      device_id: battery_${battery_num}
+      name: "${pytes_e_box_id} ${battery_prefix} ${battery_num} Firm Version"
+      device_id: ${pytes_e_box_id}_battery_${battery_num}
     coulomb_status:
-      name: "${battery_prefix} ${battery_num} Coulomb State"
-      device_id: battery_${battery_num}
+      name: "${pytes_e_box_id} ${battery_prefix} ${battery_num} Coulomb State"
+      device_id: ${pytes_e_box_id}_battery_${battery_num}
     bat_status:
-      name: "${battery_prefix} ${battery_num} Battery State"
-      device_id: battery_${battery_num}
+      name: "${pytes_e_box_id} ${battery_prefix} ${battery_num} Battery State"
+      device_id: ${pytes_e_box_id}_battery_${battery_num}
     cmos_status:
-      name: "${battery_prefix} ${battery_num} CMOS Status"
-      device_id: battery_${battery_num}
+      name: "${pytes_e_box_id} ${battery_prefix} ${battery_num} CMOS Status"
+      device_id: ${pytes_e_box_id}_battery_${battery_num}
     dmos_status:
-      name: "${battery_prefix} ${battery_num} DMOS Status"
-      device_id: battery_${battery_num}
+      name: "${pytes_e_box_id} ${battery_prefix} ${battery_num} DMOS Status"
+      device_id: ${pytes_e_box_id}_battery_${battery_num}
     bat_protect_ena:
-      name: "${battery_prefix} ${battery_num} BAT Protect ENA"
-      device_id: battery_${battery_num}
+      name: "${pytes_e_box_id} ${battery_prefix} ${battery_num} BAT Protect ENA"
+      device_id: ${pytes_e_box_id}_battery_${battery_num}
     pwr_protect_ena:
-      name: "${battery_prefix} ${battery_num} PWR Protect ENA"
-      device_id: battery_${battery_num}
+      name: "${pytes_e_box_id} ${battery_prefix} ${battery_num} PWR Protect ENA"
+      device_id: ${pytes_e_box_id}_battery_${battery_num}
     bat_events:
-      name: "${battery_prefix} ${battery_num} Battery Events"
-      device_id: battery_${battery_num}
+      name: "${pytes_e_box_id} ${battery_prefix} ${battery_num} Battery Events"
+      device_id: ${pytes_e_box_id}_battery_${battery_num}
     power_events:
-      name: "${battery_prefix} ${battery_num} Power Events"
-      device_id: battery_${battery_num}
+      name: "${pytes_e_box_id} ${battery_prefix} ${battery_num} Power Events"
+      device_id: ${pytes_e_box_id}_battery_${battery_num}
     system_fault:
-      name: "${battery_prefix} ${battery_num} System Fault"
-      device_id: battery_${battery_num}
+      name: "${pytes_e_box_id} ${battery_prefix} ${battery_num} System Fault"
+      device_id: ${pytes_e_box_id}_battery_${battery_num}
 
 sensor:
   - platform: pytes_e_box
     pytes_e_box_id: ${pytes_e_box_id}
     battery: ${battery_num}
-    cells: 
+    cells:
       - cell: 0
         voltage:
-          name: "${cell_prefix} ${battery_num}.0 Voltage"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.0 Voltage"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         temperature:
-          name: "${cell_prefix} ${battery_num}.0 Temperature"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.0 Temperature"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         coulomb:
-          name: "${cell_prefix} ${battery_num}.0 Coulomb"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.0 Coulomb"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         current:
-          name: "${cell_prefix} ${battery_num}.0 Current"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.0 Current"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
           filters:
             # Multiplication factor from mA to A is 0.001
             - multiply: 0.001
       - cell: 1
         voltage:
-          name: "${cell_prefix} ${battery_num}.1 Voltage"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.1 Voltage"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         temperature:
-          name: "${cell_prefix} ${battery_num}.1 Temperature"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.1 Temperature"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         coulomb:
-          name: "${cell_prefix} ${battery_num}.1 Coulomb"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.1 Coulomb"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         current:
-          name: "${cell_prefix} ${battery_num}.1 Current"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.1 Current"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
       - cell: 2
         voltage:
-          name: "${cell_prefix} ${battery_num}.2 Voltage"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.2 Voltage"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         temperature:
-          name: "${cell_prefix} ${battery_num}.2 Temperature"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.2 Temperature"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         coulomb:
-          name: "${cell_prefix} ${battery_num}.2 Coulomb"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.2 Coulomb"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         current:
-          name: "${cell_prefix} ${battery_num}.2 Current"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.2 Current"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
       - cell: 3
         voltage:
-          name: "${cell_prefix} ${battery_num}.3 Voltage"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.3 Voltage"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         temperature:
-          name: "${cell_prefix} ${battery_num}.3 Temperature"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.3 Temperature"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         coulomb:
-          name: "${cell_prefix} ${battery_num}.3 Coulomb"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.3 Coulomb"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         current:
-          name: "${cell_prefix} ${battery_num}.3 Current"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.3 Current"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
       - cell: 4
         voltage:
-          name: "${cell_prefix} ${battery_num}.4 Voltage"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.4 Voltage"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         temperature:
-          name: "${cell_prefix} ${battery_num}.4 Temperature"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.4 Temperature"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         coulomb:
-          name: "${cell_prefix} ${battery_num}.4 Coulomb"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.4 Coulomb"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         current:
-          name: "${cell_prefix} ${battery_num}.4 Current"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.4 Current"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
       - cell: 5
         voltage:
-          name: "${cell_prefix} ${battery_num}.5 Voltage"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.5 Voltage"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         temperature:
-          name: "${cell_prefix} ${battery_num}.5 Temperature"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.5 Temperature"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         coulomb:
-          name: "${cell_prefix} ${battery_num}.5 Coulomb"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.5 Coulomb"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         current:
-          name: "${cell_prefix} ${battery_num}.5 Current"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.5 Current"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
       - cell: 6
         voltage:
-          name: "${cell_prefix} ${battery_num}.6 Voltage"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.6 Voltage"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         temperature:
-          name: "${cell_prefix} ${battery_num}.6 Temperature"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.6 Temperature"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         coulomb:
-          name: "${cell_prefix} ${battery_num}.6 Coulomb"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.6 Coulomb"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         current:
-          name: "${cell_prefix} ${battery_num}.6 Current"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.6 Current"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
       - cell: 7
         voltage:
-          name: "${cell_prefix} ${battery_num}.7 Voltage"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.7 Voltage"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         temperature:
-          name: "${cell_prefix} ${battery_num}.7 Temperature"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.7 Temperature"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         coulomb:
-          name: "${cell_prefix} ${battery_num}.7 Coulomb"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.7 Coulomb"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         current:
-          name: "${cell_prefix} ${battery_num}.7 Current"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.7 Current"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
       - cell: 8
         voltage:
-          name: "${cell_prefix} ${battery_num}.8 Voltage"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.8 Voltage"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         temperature:
-          name: "${cell_prefix} ${battery_num}.8 Temperature"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.8 Temperature"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         coulomb:
-          name: "${cell_prefix} ${battery_num}.8 Coulomb"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.8 Coulomb"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         current:
-          name: "${cell_prefix} ${battery_num}.8 Current"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.8 Current"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
       - cell: 9
         voltage:
-          name: "${cell_prefix} ${battery_num}.9 Voltage"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.9 Voltage"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         temperature:
-          name: "${cell_prefix} ${battery_num}.9 Temperature"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.9 Temperature"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         coulomb:
-          name: "${cell_prefix} ${battery_num}.9 Coulomb"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.9 Coulomb"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         current:
-          name: "${cell_prefix} ${battery_num}.9 Current"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.9 Current"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
       - cell: 10
         voltage:
-          name: "${cell_prefix} ${battery_num}.10 Voltage"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.10 Voltage"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         temperature:
-          name: "${cell_prefix} ${battery_num}.10 Temperature"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.10 Temperature"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         coulomb:
-          name: "${cell_prefix} ${battery_num}.10 Coulomb"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.10 Coulomb"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         current:
-          name: "${cell_prefix} ${battery_num}.10 Current"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.10 Current"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
       - cell: 11
         voltage:
-          name: "${cell_prefix} ${battery_num}.11 Voltage"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.11 Voltage"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         temperature:
-          name: "${cell_prefix} ${battery_num}.11 Temperature"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.11 Temperature"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         coulomb:
-          name: "${cell_prefix} ${battery_num}.11 Coulomb"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.11 Coulomb"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         current:
-          name: "${cell_prefix} ${battery_num}.11 Current"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.11 Current"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
       - cell: 12
         voltage:
-          name: "${cell_prefix} ${battery_num}.12 Voltage"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.12 Voltage"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         temperature:
-          name: "${cell_prefix} ${battery_num}.12 Temperature"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.12 Temperature"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         coulomb:
-          name: "${cell_prefix} ${battery_num}.12 Coulomb"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.12 Coulomb"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         current:
-          name: "${cell_prefix} ${battery_num}.12 Current"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.12 Current"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
       - cell: 13
         voltage:
-          name: "${cell_prefix} ${battery_num}.13 Voltage"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.13 Voltage"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         temperature:
-          name: "${cell_prefix} ${battery_num}.13 Temperature"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.13 Temperature"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         coulomb:
-          name: "${cell_prefix} ${battery_num}.13 Coulomb"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.13 Coulomb"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         current:
-          name: "${cell_prefix} ${battery_num}.13 Current"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.13 Current"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
       - cell: 14
         voltage:
-          name: "${cell_prefix} ${battery_num}.14 Voltage"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.14 Voltage"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         temperature:
-          name: "${cell_prefix} ${battery_num}.14 Temperature"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.14 Temperature"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         coulomb:
-          name: "${cell_prefix} ${battery_num}.14 Coulomb"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.14 Coulomb"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         current:
-          name: "${cell_prefix} ${battery_num}.14 Current"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.14 Current"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
       - cell: 15
         voltage:
-          name: "${cell_prefix} ${battery_num}.15 Voltage"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.15 Voltage"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         temperature:
-          name: "${cell_prefix} ${battery_num}.15 Temperature"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.15 Temperature"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         coulomb:
-          name: "${cell_prefix} ${battery_num}.15 Coulomb"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.15 Coulomb"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
         current:
-          name: "${cell_prefix} ${battery_num}.15 Current"
-          device_id: battery_${battery_num}
+          name: "${pytes_e_box_id} ${cell_prefix} ${battery_num}.15 Current"
+          device_id: ${pytes_e_box_id}_battery_${battery_num}
     voltage:
-      name: "${battery_prefix} ${battery_num} Voltage"
-      device_id: battery_${battery_num}
+      name: "${pytes_e_box_id} ${battery_prefix} ${battery_num} Voltage"
+      device_id: ${pytes_e_box_id}_battery_${battery_num}
     current:
-      name: "${battery_prefix} ${battery_num} Current"
-      device_id: battery_${battery_num}
+      name: "${pytes_e_box_id} ${battery_prefix} ${battery_num} Current"
+      device_id: ${pytes_e_box_id}_battery_${battery_num}
       unit_of_measurement: A
       filters:
         # Multiplication factor from mA to A is 0.001
-        - multiply: 0.001      
+        - multiply: 0.001
     coulomb:
-      name: "${battery_prefix} ${battery_num} State of Charge"
-      device_id: battery_${battery_num}
+      name: "${pytes_e_box_id} ${battery_prefix} ${battery_num} State of Charge"
+      device_id: ${pytes_e_box_id}_battery_${battery_num}
     temperature:
-      name: "${battery_prefix} ${battery_num} Temperature"
-      device_id: battery_${battery_num}
+      name: "${pytes_e_box_id} ${battery_prefix} ${battery_num} Temperature"
+      device_id: ${pytes_e_box_id}_battery_${battery_num}
     temperature_low:
-      name: "${battery_prefix} ${battery_num} Temperature Low"
-      device_id: battery_${battery_num}
+      name: "${pytes_e_box_id} ${battery_prefix} ${battery_num} Temperature Low"
+      device_id: ${pytes_e_box_id}_battery_${battery_num}
     temperature_high:
-      name: "${battery_prefix} ${battery_num} Temperature High"
-      device_id: battery_${battery_num}
+      name: "${pytes_e_box_id} ${battery_prefix} ${battery_num} Temperature High"
+      device_id: ${pytes_e_box_id}_battery_${battery_num}
     voltage_low:
-      name: "${battery_prefix} ${battery_num} Voltage Low"
-      device_id: battery_${battery_num}
+      name: "${pytes_e_box_id} ${battery_prefix} ${battery_num} Voltage Low"
+      device_id: ${pytes_e_box_id}_battery_${battery_num}
     voltage_high:
-      name: "${battery_prefix} ${battery_num} Voltage Hight"
-      device_id: battery_${battery_num}
+      name: "${pytes_e_box_id} ${battery_prefix} ${battery_num} Voltage Hight"
+      device_id: ${pytes_e_box_id}_battery_${battery_num}
     work_status:
-      name: "${battery_prefix} ${battery_num} Work Status"
-      device_id: battery_${battery_num}
+      name: "${pytes_e_box_id} ${battery_prefix} ${battery_num} Work Status"
+      device_id: ${pytes_e_box_id}_battery_${battery_num}
     soc_voltage:
-      name: "${battery_prefix} ${battery_num} SOC Voltage"
-      device_id: battery_${battery_num}
+      name: "${pytes_e_box_id} ${battery_prefix} ${battery_num} SOC Voltage"
+      device_id: ${pytes_e_box_id}_battery_${battery_num}
     total_coulomb:
-      name: "${battery_prefix} ${battery_num} Total Coulomb"
-      device_id: battery_${battery_num}
+      name: "${pytes_e_box_id} ${battery_prefix} ${battery_num} Total Coulomb"
+      device_id: ${pytes_e_box_id}_battery_${battery_num}
     real_coulomb:
-      name: "${battery_prefix} ${battery_num} Real Coulomb"
-      device_id: battery_${battery_num}
+      name: "${pytes_e_box_id} ${battery_prefix} ${battery_num} Real Coulomb"
+      device_id: ${pytes_e_box_id}_battery_${battery_num}
     total_power_in:
-      name: "${battery_prefix} ${battery_num} Total Power In"
-      device_id: battery_${battery_num}
+      name: "${pytes_e_box_id} ${battery_prefix} ${battery_num} Total Power In"
+      device_id: ${pytes_e_box_id}_battery_${battery_num}
     total_power_out:
-      name: "${battery_prefix} ${battery_num} Total Power Out"
-      device_id: battery_${battery_num}
+      name: "${pytes_e_box_id} ${battery_prefix} ${battery_num} Total Power Out"
+      device_id: ${pytes_e_box_id}_battery_${battery_num}
     cell_count:
-      name: "${battery_prefix} ${battery_num} Cells"
-      device_id: battery_${battery_num}
+      name: "${pytes_e_box_id} ${battery_prefix} ${battery_num} Cells"
+      device_id: ${pytes_e_box_id}_battery_${battery_num}
