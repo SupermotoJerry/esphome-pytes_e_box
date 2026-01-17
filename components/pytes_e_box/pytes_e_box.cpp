@@ -363,10 +363,14 @@ void PytesEBoxComponent::processData_batIndexLine(std::string &buffer, int bat_n
   if (isdigit(buffer[0])) {
     PytesEBoxListener::bat_index_LineContents l{};
    
-    const int parsed = sscanf(                                                                                  // NOLINT
-      buffer.c_str(),"%d %d %d %7s %7s %7s %7s %d%% %d",                                                        // NOLINT
-      &l.cell_num, &l.cell_volt, &l.cell_tempr, l.cell_baseState, l.cell_voltState,                             // NOLINT
-      l.cell_currState, l.cell_tempState, &l.cell_coulomb, &l.cell_curr);                                       // NOLINT
+//   const int parsed = sscanf(                                                                                  // NOLINT
+//      buffer.c_str(),"%d %d %d %7s %7s %7s %7s %d%% %d",                                                        // NOLINT
+//      &l.cell_num, &l.cell_volt, &l.cell_tempr, l.cell_baseState, l.cell_voltState,                             // NOLINT
+//      l.cell_currState, l.cell_tempState, &l.cell_coulomb, &l.cell_curr);                                       // NOLINT
+    const int parsed = sscanf(                                                                                 // NOLINT
+      buffer.c_str(),"%d %d %d %d %7s %7s %7s %7s %d%% %d",                                                    // NOLINT    
+      &l.cell_num, &l.cell_volt, &l.cell_curr, &l.cell_tempr, l.cell_baseState, l.cell_voltState,              // NOLINT               
+      l.cell_currState, l.cell_tempState, &l.cell_coulomb);                                                    // NOLINT
     
     if (parsed != 9) {
       ESP_LOGE(TAG, "invalid line: found only %d, should be 9 items. in line %d\n: %s",
