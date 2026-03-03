@@ -1,0 +1,1469 @@
+PYTES>help
+@         
+Local command:
+balance  balance info - balance
+bat      Battery data show - bat [pwr][index]
+calcurr  Current calibrate coefficient - calcurr [current]
+zerocurr Zero curren offset - zerocurr
+data     History data load - data [event/history][item]
+datalist Show recorded data - datalist {event/history}{item}}
+disp     Display Info at regular intervals - disp [sys]
+log      Log information show - log
+info     Device infomation - info
+help     Help [cmd]
+login    Login Admin mode - login [password]
+logout   user mode  - logout
+pwr      Power data show - pwr [index]
+shut     Shut down - shut
+soh      State of health - soh [addr]
+stat     Statistic data show - stat
+time     Time - time [year] [month] [day] [hour] [minute] [second]
+trst     Test Soft Reset - trst                                   
+updata   updata system - updata
+ver      firmware info - ver
+**********************************************************
+Remote command:
+data     History data load - data [event/history][item]
+info     Device infomation - info
+login    Login Admin mode - login [password]
+logout   user mode  - logout
+soh      State of health - soh [addr]
+Command completed successfully
+
+PYTES>login debug
+@                
+Command completed successfully
+$$
+PYTES_debug>
+
+PYTES_debug>help
+@               
+Local command:
+balance  balance info - balance
+bat      Battery data show - bat [pwr][index]
+ubver    updata backup version - ubver
+calcurr  Current calibrate coefficient - calcurr [current]
+zerocurr Zero curren offset - zerocurr
+ctrl     Contrl IO - ctrl [cfet/dfet/buzz/heat] [on/off]
+data     History data load - data [event/history][item]
+datac    Clear data - datac [event/history]
+datalist Show recorded data - datalist {event/history}{item}}
+debug    debug mode - debug [cani/cane/485]
+disp     Display Info at regular intervals - disp [sys]
+eepe     EEPROM erase - eepe
+eepr     EEPROM read - eepr [Offset][size]
+eepw     EEPROM write - eepw [Offset][Val][/size]
+flae     Extend flash erase - flae
+flar     Extend flash read - flar [Offset][size]
+flaw     Extend flash write - flaw [Offset][Val][/size]
+log      Log information show - log                    
+logc     Log clear - logc
+logt     Log test - logt [data]
+manu     set manu date - manu [year] [month] [day]
+info     Device infomation - info
+help     Help [cmd]
+login    Login Admin mode - login [password]
+logout   user mode  - logout
+pwr      Power data show - pwr [index]
+pwrsys   power system info display
+grp      group system info display
+grpsys   group system info display
+ci       Current Comm Info
+ct       Track Comm Port Data
+re       Send Command To the Specified Power - re [addr][command]
+tmpicr   TMPR IC read - tmpicr [Offset]
+tmpicw   TMPR IC write - tmpicw [Offset][Val]
+tmpicd   TMPR IC data show - tmpicd 
+tmpicsh  TMPR IC Reg Show - tmpicsh               
+setprt   set protocol type - setprt [prot]
+sim      sim [volt/curr/temp/comm][value]
+shut     Shut down - shut
+soh      State of health - soh [addr]
+stat     Statistic data show - stat
+statc    Clear statistic - statc
+tbar     Test write Barcode - tbar[reg]
+tbuz     Test Buzzer - tbuz
+tdip     Test Dip - tdip
+time     Time - time [year] [month] [day] [hour] [minute] [second]
+tled     Test Led - tled
+tcan     Test can port - tcan [port#]
+trst     Test Soft Reset - trst
+tusart   Usart test - tusart[len]
+updata   updata system - updata
+twdg     Stop feeding watchdog - wdg
+uboot    updata boot - uboot
+ver      firmware info - ver                      
+**********************************************************
+Remote command:
+ctrl     Contrl IO - ctrl [cfet/dfet/buzz/heat] [on/off]
+data     History data load - data [event/history][item]
+info     Device infomation - info
+login    Login Admin mode - login [password]
+logout   user mode  - logout
+prot     Protect ctrl - prot [bov/bhv/blv/buv/pov/phv/plv/puv/cbot/cbht/cblt/cbut/dbot/dbht/dblt/dbut/pot/pht/
+         plt/put/coc/coc2/coca/doc/doc2/doca/sc/default][en/dis]
+soh      State of health - soh [addr]
+Command completed successfully
+$$
+PYTES_debug>
+
+PYTES_debug>info
+@               
+Device address      : 1
+Manufacturer        : PYTES
+Device name         : E-BOX-48100S-M
+Board version       : SQBMSV110
+Main Soft version   : PLBCU-06P-48V-V1.02.008.H
+Iterate version     : PLBCU-06P-48V-V1.02.008.H.T2
+Soft  version       : V1.10
+Boot  version       : V1.11
+Comm version        : V2.0
+Release Date        : 25-09-03
+Manu Date           : 
+Barcode             : 04180000000*****
+Board ID            : GD3430365301393232333*****
+Board SRAM Size     : 96KB
+Board FLASH Size    : 1024KB
+Specification       : 51.2V/100AH
+Cell Number         : 16
+Max Dischg Curr     : -102000mA
+Max Charge Curr     : 102000mA
+Console Port rate   : 115200
+Command completed successfully
+$$
+PYTES_debug>
+
+
+PYTES_debug>grpsys
+@                 
+ Group System Information
+ ---------------------------------
+ Group total Num          : 2        
+ Group online Num         : 2        
+ Power total Num          : 10       
+ Power online Num         : 10       
+ System Volt              : 53607    mV
+ System Curr              : -20445   mA
+ Shunt Temp               : 0        mC
+ Prechg Temp              : 0        mC
+ System RC                : 983951   mAH
+ System FCC               : 1000000  mAH
+ Total Power In           : 2168     100WH
+ Total Power Out          : 1642     100WH
+ System SOC               : 98       %
+ System SOH               : 100      %
+ Work Status              : 1        
+ CMOS Status              : 1F       
+ DMOS Status              : 1F       
+ Highest voltage          : 3354     mV
+ Highest voltage num      : 20       
+ Average voltage          : 0        mV
+ Lowest voltage           : 3345     mV
+ Lowest voltage num       : 35       
+ Highest temperature      : 33000    mC
+ Highest temperature num  : 1        
+ Lowest temperature       : 30000    mC
+ Lowest temperature num   : 65       
+ Average temperature      : 31406    mC
+ Recommend chg voltage    : 56800    mV
+ Recommend dsg voltage    : 45500    mV
+ Recommend chg current    : 50000    mA
+ Recommend dsg current    : 400000   mA
+Command completed successfully
+$$
+PYTES_debug>
+
+
+PYTES_debug>pwrsys
+@                 
+ Power System Information
+ ---------------------------------
+ System is discharging
+ Total Num                : 5        
+ Present Num              : 5        
+ Sleep Num                : 0        
+ DCIN Volt                : 53020    mV
+ System Volt              : 53593    mV
+ System Curr              : -10152   mA
+ Shunt Temp               : 38000    mC
+ Prechg Temp              : 34000    mC
+ System RC                : 492083   mAH
+ System FCC               : 500000   mAH
+ Total Power In           : 1216     100WH
+ Total Power Out          : 948      100WH
+ System SOC               : 98       %
+ System SOH               : 100      %
+ Work Status              : 2        
+ CMOS Status              : 1F       
+ DMOS Status              : 1F       
+ Highest voltage          : 3353     mV
+ Highest voltage num      : 14       
+ Average voltage          : 3349     mV
+ Lowest voltage           : 3344     mV
+ Lowest voltage num       : 64       
+ Highest temperature      : 33000    mC
+ Highest temperature num  : 1        
+ Lowest temperature       : 30000    mC
+ Lowest temperature num   : 49       
+ Average temperature      : 31350    mC
+ Recommend chg voltage    : 56800    mV
+ Recommend dsg voltage    : 45500    mV
+ Recommend chg current    : 25000    mA
+ Recommend dsg current    : 200000   mA
+Command completed successfully
+$$
+PYTES_debug>
+
+PYTES_debug>bat 1
+@                
+Battery  Volt     Curr     Tempr    Base State   Volt. State  Curr. State  Temp. State  Coulomb     
+0        3348     -2000    33000    Dischg       Normal       Normal       Normal        99%      98596 mAH
+1        3350     -2000    33000    Dischg       Normal       Normal       Normal        99%      98596 mAH
+2        3345     -2000    33000    Dischg       Normal       Normal       Normal        99%      98596 mAH
+3        3350     -2000    33000    Dischg       Normal       Normal       Normal        99%      98596 mAH
+4        3349     -2000    33000    Dischg       Normal       Normal       Normal        99%      98596 mAH
+5        3350     -2000    33000    Dischg       Normal       Normal       Normal        99%      98596 mAH
+6        3344     -2000    33000    Dischg       Normal       Normal       Normal        99%      98596 mAH
+7        3350     -2000    33000    Dischg       Normal       Normal       Normal        99%      98596 mAH
+8        3347     -2000    33000    Dischg       Normal       Normal       Normal        99%      98596 mAH
+9        3349     -2000    33000    Dischg       Normal       Normal       Normal        99%      98596 mAH
+10       3348     -2000    33000    Dischg       Normal       Normal       Normal        99%      98596 mAH
+11       3352     -2000    33000    Dischg       Normal       Normal       Normal        99%      98596 mAH
+12       3348     -2000    33000    Dischg       Normal       Normal       Normal        99%      98596 mAH
+13       3352     -2000    33000    Dischg       Normal       Normal       Normal        99%      98596 mAH
+14       3347     -2000    33000    Dischg       Normal       Normal       Normal        99%      98596 mAH
+15       3350     -2000    33000    Dischg       Normal       Normal       Normal        99%      98596 mAH
+Command completed successfully
+$$
+PYTES_debug>bat 2
+@                
+Battery  Volt     Curr     Tempr    Base State   Volt. State  Curr. State  Temp. State  Coulomb     
+0        3350     -2100    32000    Dischg       Normal       Normal       Normal        98%      98381 mAH
+1        3348     -2100    32000    Dischg       Normal       Normal       Normal        98%      98381 mAH
+2        3353     -2100    32000    Dischg       Normal       Normal       Normal        98%      98381 mAH
+3        3351     -2100    32000    Dischg       Normal       Normal       Normal        98%      98381 mAH
+4        3349     -2100    32000    Dischg       Normal       Normal       Normal        98%      98381 mAH
+5        3350     -2100    31000    Dischg       Normal       Normal       Normal        98%      98381 mAH
+6        3351     -2100    31000    Dischg       Normal       Normal       Normal        98%      98381 mAH
+7        3350     -2100    31000    Dischg       Normal       Normal       Normal        98%      98381 mAH
+8        3352     -2100    31000    Dischg       Normal       Normal       Normal        98%      98381 mAH
+9        3351     -2100    31000    Dischg       Normal       Normal       Normal        98%      98381 mAH
+10       3351     -2100    32000    Dischg       Normal       Normal       Normal        98%      98381 mAH
+11       3350     -2100    32000    Dischg       Normal       Normal       Normal        98%      98381 mAH
+12       3351     -2100    32000    Dischg       Normal       Normal       Normal        98%      98381 mAH
+13       3348     -2100    32000    Dischg       Normal       Normal       Normal        98%      98381 mAH
+14       3349     -2100    32000    Dischg       Normal       Normal       Normal        98%      98381 mAH
+15       3349     -2100    32000    Dischg       Normal       Normal       Normal        98%      98381 mAH
+Command completed successfully
+$$
+PYTES_debug>bat 3
+@                
+Battery  Volt     Curr     Tempr    Base State   Volt. State  Curr. State  Temp. State  Coulomb     
+0        3349     -1990    31000    Dischg       Normal       Normal       Normal        98%      98398 mAH
+1        3348     -1990    31000    Dischg       Normal       Normal       Normal        98%      98398 mAH
+2        3346     -1990    31000    Dischg       Normal       Normal       Normal        98%      98398 mAH
+3        3348     -1990    31000    Dischg       Normal       Normal       Normal        98%      98398 mAH
+4        3351     -1990    31000    Dischg       Normal       Normal       Normal        98%      98398 mAH
+5        3348     -1990    31000    Dischg       Normal       Normal       Normal        98%      98398 mAH
+6        3349     -1990    31000    Dischg       Normal       Normal       Normal        98%      98398 mAH
+7        3347     -1990    31000    Dischg       Normal       Normal       Normal        98%      98398 mAH
+8        3349     -1990    31000    Dischg       Normal       Normal       Normal        98%      98398 mAH
+9        3349     -1990    31000    Dischg       Normal       Normal       Normal        98%      98398 mAH
+10       3349     -1990    32000    Dischg       Normal       Normal       Normal        98%      98398 mAH
+11       3349     -1990    32000    Dischg       Normal       Normal       Normal        98%      98398 mAH
+12       3350     -1990    32000    Dischg       Normal       Normal       Normal        98%      98398 mAH
+13       3347     -1990    32000    Dischg       Normal       Normal       Normal        98%      98398 mAH
+14       3349     -1990    32000    Dischg       Normal       Normal       Normal        98%      98398 mAH
+15       3347     -1990    32000    Dischg       Normal       Normal       Normal        98%      98398 mAH
+Command completed successfully
+$$
+PYTES_debug>
+
+PYTES_debug>info 1
+@                 
+Device address      : 1
+Manufacturer        : PYTES
+Device name         : E-BOX-48100S-S
+Board version       : SQBMSV110
+Main Soft version   : PLBMU-16S-RP1-V1.01.007
+Iterate version     : PLBMU-16S-RP1-V1.01.007.T1
+Soft  version       : V1.10
+Boot  version       : V1.12
+Comm version        : V2.0
+HUB Comm version    : 1
+Release Date        : 25-05-20
+Barcode             : 74180000000*****
+Board ID            : GD353631310C307120213*****
+Board SRAM Size     : 96KB
+Board FLASH Size    : 512KB
+Specification       : 51.2V/100AH
+Cell Number         : 16
+Max Dischg Curr     : -102000mA
+Max Charge Curr     : 102000mA
+Console Port rate   : 115200
+Command completed successfully
+$$
+PYTES_debug>info 2 
+@                 
+Device address      : 2
+Manufacturer        : PYTES
+Device name         : E-BOX-48100S-S
+Board version       : SQBMSV110
+Main Soft version   : PLBMU-16S-RP1-V1.01.007
+Iterate version     : PLBMU-16S-RP1-V1.01.007.T1
+Soft  version       : V1.10
+Boot  version       : V1.12
+Comm version        : V2.0
+HUB Comm version    : 1
+Release Date        : 25-05-20
+Barcode             : 64180000000*****
+Board ID            : GD353631310C307120213*****
+Board SRAM Size     : 96KB
+Board FLASH Size    : 512KB
+Specification       : 51.2V/100AH
+Cell Number         : 16
+Max Dischg Curr     : -102000mA
+Max Charge Curr     : 102000mA
+Console Port rate   : 115200
+Command completed successfully
+$$
+PYTES_debug>info 3
+@                 
+Device address      : 3
+Manufacturer        : PYTES
+Device name         : E-BOX-48100S-S
+Board version       : SQBMSV110
+Main Soft version   : PLBMU-16S-RP1-V1.01.007
+Iterate version     : PLBMU-16S-RP1-V1.01.007.T1
+Soft  version       : V1.10
+Boot  version       : V1.12
+Comm version        : V2.0
+HUB Comm version    : 1
+Release Date        : 25-05-20
+Barcode             : 24180000000*****
+Board ID            : GD353631310C307120213*****
+Board SRAM Size     : 96KB
+Board FLASH Size    : 512KB
+Specification       : 51.2V/100AH
+Cell Number         : 16
+Max Dischg Curr     : -102000mA
+Max Charge Curr     : 102000mA
+Console Port rate   : 115200
+Command completed successfully
+$$
+PYTES_debug>info 4
+@                 
+Device address      : 4
+Manufacturer        : PYTES
+Device name         : E-BOX-48100S-S
+Board version       : SQBMSV110
+Main Soft version   : PLBMU-16S-RP1-V1.01.007
+Iterate version     : PLBMU-16S-RP1-V1.01.007.T1
+Soft  version       : V1.10
+Boot  version       : V1.12
+Comm version        : V2.0
+HUB Comm version    : 1
+Release Date        : 25-05-20
+Barcode             : 54180000000*****
+Board ID            : GD3837344712B094184E3*****
+Board SRAM Size     : 96KB
+Board FLASH Size    : 512KB
+Specification       : 51.2V/100AH
+Cell Number         : 16
+Max Dischg Curr     : -102000mA
+Max Charge Curr     : 102000mA
+Console Port rate   : 115200
+Command completed successfully
+$$
+PYTES_debug>info 5
+@                 
+Device address      : 5
+Manufacturer        : PYTES
+Device name         : E-BOX-48100S-S
+Board version       : SQBMSV110
+Main Soft version   : PLBMU-16S-RP1-V1.01.007
+Iterate version     : PLBMU-16S-RP1-V1.01.007.T1
+Soft  version       : V1.10
+Boot  version       : V1.12
+Comm version        : V2.0
+HUB Comm version    : 1
+Release Date        : 25-05-20
+Barcode             : 04180000000*****
+Board ID            : GD353631310C307120213*****
+Board SRAM Size     : 96KB
+Board FLASH Size    : 512KB
+Specification       : 51.2V/100AH
+Cell Number         : 16
+Max Dischg Curr     : -102000mA
+Max Charge Curr     : 102000mA
+Console Port rate   : 115200
+Command completed successfully
+$$
+PYTES_debug>
+
+PYTES_debug>grp 0
+@                
+ Group 0 Information
+ ---------------------------------
+ Power Num                : 5        
+ Present Flag             : 1f       
+ Group Volt               : 53649    mV
+ Group Curr               : -9499    mA
+ Env Temp                 : 40000    mC
+ Shunt Temp               : 38000    mC
+ Env Temp max             : 35000    mC
+ Group SOC                : 98       %
+ Group SOH                : 100      %
+ Group RC                 : 492475   mAH
+ Group FCC                : 500000   mAH
+ Power In                 : 1216     100WH
+ Power Out                : 948      100WH
+ CMOS Status              : 1F       
+ DMOS Status              : 1F       
+ Highest voltage          : 3357     mV
+ Highest voltage num      : 19       
+ Lowest voltage           : 3347     mV
+ Lowest voltage num       : 64       
+ Highest temperature      : 33000    mC
+ Highest temperature num  : 1        
+ Lowest temperature       : 30000    mC
+ Lowest temperature num   : 65       
+ Recommend chg voltage    : 56800    mV
+ Recommend dsg voltage    : 45500    mV
+ Recommend chg current    : 25000    mA
+ Recommend dsg current    : 200000   mA
+Command completed successfully
+$$
+PYTES_debug>
+
+PYTES_debug>grpsys
+@                 
+ Group System Information
+ ---------------------------------
+ Group total Num          : 2        
+ Group online Num         : 2        
+ Power total Num          : 10       
+ Power online Num         : 10       
+ System Volt              : 53641    mV
+ System Curr              : -20053   mA
+ Shunt Temp               : 0        mC
+ Prechg Temp              : 0        mC
+ System RC                : 984525   mAH
+ System FCC               : 1000000  mAH
+ Total Power In           : 2168     100WH
+ Total Power Out          : 1641     100WH
+ System SOC               : 98       %
+ System SOH               : 100      %
+ Work Status              : 1        
+ CMOS Status              : 1F       
+ DMOS Status              : 1F       
+ Highest voltage          : 3358     mV
+ Highest voltage num      : 116      
+ Average voltage          : 0        mV
+ Lowest voltage           : 3347     mV
+ Lowest voltage num       : 112      
+ Highest temperature      : 33000    mC
+ Highest temperature num  : 1        
+ Lowest temperature       : 30000    mC
+ Lowest temperature num   : 65       
+ Average temperature      : 31406    mC
+ Recommend chg voltage    : 56800    mV
+ Recommend dsg voltage    : 45500    mV
+ Recommend chg current    : 50000    mA
+ Recommend dsg current    : 400000   mA
+Command completed successfully
+$$
+PYTES_debug>
+
+PYTES_debug>pwrsys
+@                 
+ Power System Information
+ ---------------------------------
+ System is discharging
+ Total Num                : 5        
+ Present Num              : 5        
+ Sleep Num                : 0        
+ DCIN Volt                : 53053    mV
+ System Volt              : 53640    mV
+ System Curr              : -9926    mA
+ Shunt Temp               : 38000    mC
+ Prechg Temp              : 34000    mC
+ System RC                : 492427   mAH
+ System FCC               : 500000   mAH
+ Total Power In           : 1216     100WH
+ Total Power Out          : 948      100WH
+ System SOC               : 98       %
+ System SOH               : 100      %
+ Work Status              : 2        
+ CMOS Status              : 1F       
+ DMOS Status              : 1F       
+ Highest voltage          : 3357     mV
+ Highest voltage num      : 19       
+ Average voltage          : 3352     mV
+ Lowest voltage           : 3347     mV
+ Lowest voltage num       : 74       
+ Highest temperature      : 33000    mC
+ Highest temperature num  : 1        
+ Lowest temperature       : 30000    mC
+ Lowest temperature num   : 65       
+ Average temperature      : 31412    mC
+ Recommend chg voltage    : 56800    mV
+ Recommend dsg voltage    : 45500    mV
+ Recommend chg current    : 25000    mA
+ Recommend dsg current    : 200000   mA
+Command completed successfully
+$$
+PYTES_debug>
+
+
+PYTES_debug>soh 1
+@                
+Power   1
+Battery    Voltage    SOHCount   SOHStatus 
+0          3353       0          00000000
+1          3350       0          00000000
+2          3351       0          00000000
+3          3351       0          00000000
+4          3354       0          00000000
+5          3350       0          00000000
+6          3350       0          00000000
+7          3350       0          00000000
+8          3353       0          00000000
+9          3349       0          00000000
+10         3354       0          00000000
+11         3352       0          00000000
+12         3354       0          00000000
+13         3352       0          00000000
+14         3351       0          00000000
+15         3350       0          00000000
+Command completed successfully
+$$
+PYTES_debug>
+
+
+PYTES_debug>pwr 1
+@                
+ ----------------------------
+ Power  1
+
+ Voltage         : 53357               mV
+ SOC Voltage     : 0                   mV
+ Current         : -2288               mA
+ Temperature     : 35000               mC
+ Coulomb         : 98                  %
+ Total Coulomb   : 360000000           mAS
+ Real Coulomb    : 100000              mAH
+ Total Power In  : 1306348             WS
+ Total Power Out : 860632              WS
+ Charge Count    : 0               
+ Discharge Count : 0               
+ Charge Times    : 0               
+ Work Status     : 2               
+ Bat Num         : 16              
+ Barcode         : 74180000000*****
+ DevType         : E-BOX-48100S-S  
+ Firm Version    : PLBMU-16S-RP1-V1.01.007.T1
+ Next Device     : 1               
+ Basic Status    : Dischg  
+ Volt Status     : Normal  
+ Current Status  : Normal  
+ Tmpr. Status    : Normal  
+ Coul. Status    : Normal  
+ Bat Status      : VNOR TNOR
+ Heater Status   : OFF     
+ CMOS Status     : ON      
+ DMOS Status     : ON      
+ Input Status    : OFF     
+ Terminal Res.   : ON      
+ Bat Protect ENA : OV HV LV UV SLP OT HT LT UT
+ Pwr Protect ENA : OV HV LV UV SLP OT HT LT UT COC COC2 COCA DOCA DOC DOC2 SC
+ Bat Events      : 0x0       
+ Power Events    : 0x0       
+ System Fault    : 0x0       
+ ----------------------------
+Command completed successfully
+$$
+PYTES_debug>pwr 2
+@                
+ ----------------------------
+ Power  2
+
+ Voltage         : 53377               mV
+ SOC Voltage     : 0                   mV
+ Current         : -2340               mA
+ Temperature     : 34000               mC
+ Coulomb         : 98                  %
+ Total Coulomb   : 360000000           mAS
+ Real Coulomb    : 100000              mAH
+ Total Power In  : 1908488             WS
+ Total Power Out : 1528762             WS
+ Charge Count    : 0               
+ Discharge Count : 0               
+ Charge Times    : 0               
+ Work Status     : 2               
+ Bat Num         : 16              
+ Barcode         : 64180000000*****
+ DevType         : E-BOX-48100S-S  
+ Firm Version    : PLBMU-16S-RP1-V1.01.007.T1
+ Next Device     : 1               
+ Basic Status    : Dischg  
+ Volt Status     : Normal  
+ Current Status  : Normal  
+ Tmpr. Status    : Normal  
+ Coul. Status    : Normal  
+ Bat Status      : VNOR TNOR
+ Heater Status   : OFF     
+ CMOS Status     : ON      
+ DMOS Status     : ON      
+ Input Status    : OFF     
+ Bat Protect ENA : OV HV LV UV SLP OT HT LT UT
+ Pwr Protect ENA : OV HV LV UV SLP OT HT LT UT COC COC2 COCA DOCA DOC DOC2 SC
+ Bat Events      : 0x0       
+ Power Events    : 0x0       
+ System Fault    : 0x0       
+ ----------------------------
+Command completed successfully
+$$
+PYTES_debug>pwr 3
+@                
+ ----------------------------
+ Power  3
+
+ Voltage         : 53349               mV
+ SOC Voltage     : 0                   mV
+ Current         : -2176               mA
+ Temperature     : 33000               mC
+ Coulomb         : 98                  %
+ Total Coulomb   : 360000000           mAS
+ Real Coulomb    : 100000              mAH
+ Total Power In  : 1785644             WS
+ Total Power Out : 1442740             WS
+ Charge Count    : 0               
+ Discharge Count : 0               
+ Charge Times    : 0               
+ Work Status     : 2               
+ Bat Num         : 16              
+ Barcode         : 24180000000*****
+ DevType         : E-BOX-48100S-S  
+ Firm Version    : PLBMU-16S-RP1-V1.01.007.T1
+ Next Device     : 1               
+ Basic Status    : Dischg  
+ Volt Status     : Normal  
+ Current Status  : Normal  
+ Tmpr. Status    : Normal  
+ Coul. Status    : Normal  
+ Bat Status      : VNOR TNOR
+ Heater Status   : OFF     
+ CMOS Status     : ON      
+ DMOS Status     : ON      
+ Input Status    : OFF     
+ Bat Protect ENA : OV HV LV UV SLP OT HT LT UT
+ Pwr Protect ENA : OV HV LV UV SLP OT HT LT UT COC COC2 COCA DOCA DOC DOC2 SC
+ Bat Events      : 0x0       
+ Power Events    : 0x0       
+ System Fault    : 0x0       
+ ----------------------------
+Command completed successfully
+$$
+PYTES_debug>pwr 4
+@                
+ ----------------------------
+ Power  4
+
+ Voltage         : 53374               mV
+ SOC Voltage     : 0                   mV
+ Current         : -2180               mA
+ Temperature     : 32000               mC
+ Coulomb         : 98                  %
+ Total Coulomb   : 360000000           mAS
+ Real Coulomb    : 100000              mAH
+ Total Power In  : 1804226             WS
+ Total Power Out : 1430292             WS
+ Charge Count    : 0               
+ Discharge Count : 0               
+ Charge Times    : 0               
+ Work Status     : 2               
+ Bat Num         : 16              
+ Barcode         : 54180000000*****
+ DevType         : E-BOX-48100S-S  
+ Firm Version    : PLBMU-16S-RP1-V1.01.007.T1
+ Next Device     : 1               
+ Basic Status    : Dischg  
+ Volt Status     : Normal  
+ Current Status  : Normal  
+ Tmpr. Status    : Normal  
+ Coul. Status    : Normal  
+ Bat Status      : VNOR TNOR
+ Heater Status   : OFF     
+ CMOS Status     : ON      
+ DMOS Status     : ON      
+ Input Status    : OFF     
+ Bat Protect ENA : OV HV LV UV SLP OT HT LT UT
+ Pwr Protect ENA : OV HV LV UV SLP OT HT LT UT COC COC2 COCA DOCA DOC DOC2 SC
+ Bat Events      : 0x0       
+ Power Events    : 0x0       
+ System Fault    : 0x0       
+ ----------------------------
+Command completed successfully
+$$
+PYTES_debug>pwr 5
+@                
+ ----------------------------
+ Power  5
+
+ Voltage         : 53347               mV
+ SOC Voltage     : 0                   mV
+ Current         : -2271               mA
+ Temperature     : 31000               mC
+ Coulomb         : 98                  %
+ Total Coulomb   : 360000000           mAS
+ Real Coulomb    : 100000              mAH
+ Total Power In  : 1783990             WS
+ Total Power Out : 1440944             WS
+ Charge Count    : 0               
+ Discharge Count : 0               
+ Charge Times    : 0               
+ Work Status     : 2               
+ Bat Num         : 16              
+ Barcode         : 04180000000*****
+ DevType         : E-BOX-48100S-S  
+ Firm Version    : PLBMU-16S-RP1-V1.01.007.T1
+ Next Device     : 0               
+ Basic Status    : Dischg  
+ Volt Status     : Normal  
+ Current Status  : Normal  
+ Tmpr. Status    : Normal  
+ Coul. Status    : Normal  
+ Bat Status      : VNOR TNOR
+ Heater Status   : OFF     
+ CMOS Status     : ON      
+ DMOS Status     : ON      
+ Input Status    : OFF     
+ Bat Protect ENA : OV HV LV UV SLP OT HT LT UT
+ Pwr Protect ENA : OV HV LV UV SLP OT HT LT UT COC COC2 COCA DOCA DOC DOC2 SC
+ Bat Events      : 0x0       
+ Power Events    : 0x0       
+ System Fault    : 0x0       
+ ----------------------------
+Command completed successfully
+$$
+PYTES_debug>
+
+PYTES_debug>pwr
+@              
+Power Volt   Curr   Tempr  Tlow   Thigh  Vlow   Vhigh  Base.St  Volt.St  Curr.St  Temp.St  Coulomb  Time                 B.V.St   B.T.St   Barcode              DevType             
+1     53138  -1484  34000  33000  33000  3320   3322   Dischg   Normal   Normal   Normal   76%      2026-03-03 20:42:29  Normal   Normal   74180000000*****     E-BOX-48100S-S      
+2     53162  -1665  34000  32000  32000  3322   3323   Dischg   Normal   Normal   Normal   76%      2026-03-03 20:42:31  Normal   Normal   64180000000*****     E-BOX-48100S-S      
+3     53130  -1460  33000  31000  32000  3319   3322   Dischg   Normal   Normal   Normal   79%      2026-03-03 20:42:27  Normal   Normal   24180000000*****     E-BOX-48100S-S      
+4     53164  -1460  32000  31000  31000  3320   3323   Dischg   Normal   Normal   Normal   79%      2026-03-03 20:42:28  Normal   Normal   54180000000*****     E-BOX-48100S-S      
+5     53139  -1488  31000  30000  30000  3320   3322   Dischg   Normal   Normal   Normal   79%      2026-03-03 20:42:29  Normal   Normal   04180000000*****     E-BOX-48100S-S      
+6     -      -      -      -      -      -      -      Absent   -        -        -        -        -                    -        -        -                    -                   
+Command completed successfully
+$$
+PYTES_debug>pwr
+@              
+Power Volt   Curr   Tempr  Tlow   Thigh  Vlow   Vhigh  Base.St  Volt.St  Curr.St  Temp.St  Coulomb  Time                 B.V.St   B.T.St   Barcode              DevType             
+1     53138  -1484  34000  33000  33000  3320   3322   Dischg   Normal   Normal   Normal   76%      2026-03-03 20:42:29  Normal   Normal   74180000000*****     E-BOX-48100S-S      
+2     53162  -1665  34000  32000  32000  3322   3323   Dischg   Normal   Normal   Normal   76%      2026-03-03 20:42:31  Normal   Normal   64180000000*****     E-BOX-48100S-S      
+3     53131  -1562  33000  31000  32000  3318   3321   Dischg   Normal   Normal   Normal   79%      2026-03-03 20:42:30  Normal   Normal   24180000000*****     E-BOX-48100S-S      
+4     53163  -1526  32000  31000  31000  3320   3323   Dischg   Normal   Normal   Normal   79%      2026-03-03 20:42:31  Normal   Normal   54180000000*****     E-BOX-48100S-S      
+5     53136  -1508  32000  30000  30000  3320   3322   Dischg   Normal   Normal   Normal   79%      2026-03-03 20:42:32  Normal   Normal   04180000000*****     E-BOX-48100S-S      
+6     -      -      -      -      -      -      -      Absent   -        -        -        -        -                    -        -        -                    -                   
+Command completed successfully
+$$
+PYTES_debug>pwr
+@              
+Power Volt   Curr   Tempr  Tlow   Thigh  Vlow   Vhigh  Base.St  Volt.St  Curr.St  Temp.St  Coulomb  Time                 B.V.St   B.T.St   Barcode              DevType             
+1     53133  -1480  34000  33000  33000  3320   3322   Dischg   Normal   Normal   Normal   76%      2026-03-03 20:42:32  Normal   Normal   74180000000*****     E-BOX-48100S-S      
+2     53163  -1655  34000  32000  32000  3322   3323   Dischg   Normal   Normal   Normal   76%      2026-03-03 20:42:34  Normal   Normal   64180000000*****     E-BOX-48100S-S      
+3     53131  -1562  33000  31000  32000  3318   3321   Dischg   Normal   Normal   Normal   79%      2026-03-03 20:42:30  Normal   Normal   24180000000*****     E-BOX-48100S-S      
+4     53163  -1526  32000  31000  31000  3320   3323   Dischg   Normal   Normal   Normal   79%      2026-03-03 20:42:31  Normal   Normal   54180000000*****     E-BOX-48100S-S      
+5     53136  -1508  32000  30000  30000  3320   3322   Dischg   Normal   Normal   Normal   79%      2026-03-03 20:42:32  Normal   Normal   04180000000*****     E-BOX-48100S-S      
+6     -      -      -      -      -      -      -      Absent   -        -        -        -        -                    -        -        -                    -                   
+Command completed successfully
+$$
+PYTES_debug>pwr
+@              
+Power Volt   Curr   Tempr  Tlow   Thigh  Vlow   Vhigh  Base.St  Volt.St  Curr.St  Temp.St  Coulomb  Time                 B.V.St   B.T.St   Barcode              DevType             
+1     53133  -1480  34000  33000  33000  3320   3322   Dischg   Normal   Normal   Normal   76%      2026-03-03 20:42:32  Normal   Normal   74180000000*****     E-BOX-48100S-S      
+2     53163  -1655  34000  32000  32000  3322   3323   Dischg   Normal   Normal   Normal   76%      2026-03-03 20:42:34  Normal   Normal   64180000000*****     E-BOX-48100S-S      
+3     53130  -1572  33000  31000  32000  3319   3321   Dischg   Normal   Normal   Normal   79%      2026-03-03 20:42:33  Normal   Normal   24180000000*****     E-BOX-48100S-S      
+4     53164  -1540  32000  31000  31000  3321   3324   Dischg   Normal   Normal   Normal   79%      2026-03-03 20:42:34  Normal   Normal   54180000000*****     E-BOX-48100S-S      
+5     53136  -1524  31000  30000  30000  3320   3322   Dischg   Normal   Normal   Normal   79%      2026-03-03 20:42:35  Normal   Normal   04180000000*****     E-BOX-48100S-S      
+6     -      -      -      -      -      -      -      Absent   -        -        -        -        -                    -        -        -                    -                   
+Command completed successfully
+$$
+PYTES_debug>bat 2
+@                
+Battery  Volt     Curr     Tempr    Base State   Volt. State  Curr. State  Temp. State  Coulomb     
+0        3321     -1630    32000    Dischg       Normal       Normal       Normal        76%      76302 mAH
+1        3322     -1630    32000    Dischg       Normal       Normal       Normal        76%      76302 mAH
+2        3323     -1630    32000    Dischg       Normal       Normal       Normal        76%      76302 mAH
+3        3323     -1630    32000    Dischg       Normal       Normal       Normal        76%      76302 mAH
+4        3323     -1630    32000    Dischg       Normal       Normal       Normal        76%      76302 mAH
+5        3323     -1630    32000    Dischg       Normal       Normal       Normal        76%      76302 mAH
+6        3322     -1630    32000    Dischg       Normal       Normal       Normal        76%      76302 mAH
+7        3323     -1630    32000    Dischg       Normal       Normal       Normal        76%      76302 mAH
+8        3323     -1630    32000    Dischg       Normal       Normal       Normal        76%      76302 mAH
+9        3324     -1630    32000    Dischg       Normal       Normal       Normal        76%      76302 mAH
+10       3322     -1630    32000    Dischg       Normal       Normal       Normal        76%      76302 mAH
+11       3323     -1630    32000    Dischg       Normal       Normal       Normal        76%      76302 mAH
+12       3323     -1630    32000    Dischg       Normal       Normal       Normal        76%      76302 mAH
+13       3323     -1630    32000    Dischg       Normal       Normal       Normal        76%      76302 mAH
+14       3322     -1630    32000    Dischg       Normal       Normal       Normal        76%      76302 mAH
+15       3322     -1630    32000    Dischg       Normal       Normal       Normal        76%      76302 mAH
+Command completed successfully
+$$
+PYTES_debug>bat 1
+@                
+Battery  Volt     Curr     Tempr    Base State   Volt. State  Curr. State  Temp. State  Coulomb     
+0        3320     -1520    33000    Dischg       Normal       Normal       Normal        76%      75799 mAH
+1        3321     -1520    33000    Dischg       Normal       Normal       Normal        76%      75799 mAH
+2        3322     -1520    33000    Dischg       Normal       Normal       Normal        76%      75799 mAH
+3        3322     -1520    33000    Dischg       Normal       Normal       Normal        76%      75799 mAH
+4        3321     -1520    33000    Dischg       Normal       Normal       Normal        76%      75799 mAH
+5        3322     -1520    33000    Dischg       Normal       Normal       Normal        76%      75799 mAH
+6        3321     -1520    33000    Dischg       Normal       Normal       Normal        76%      75799 mAH
+7        3322     -1520    33000    Dischg       Normal       Normal       Normal        76%      75799 mAH
+8        3321     -1520    33000    Dischg       Normal       Normal       Normal        76%      75799 mAH
+9        3322     -1520    33000    Dischg       Normal       Normal       Normal        76%      75799 mAH
+10       3321     -1520    33000    Dischg       Normal       Normal       Normal        76%      75799 mAH
+11       3322     -1520    33000    Dischg       Normal       Normal       Normal        76%      75799 mAH
+12       3322     -1520    33000    Dischg       Normal       Normal       Normal        76%      75799 mAH
+13       3322     -1520    33000    Dischg       Normal       Normal       Normal        76%      75799 mAH
+14       3321     -1520    33000    Dischg       Normal       Normal       Normal        76%      75799 mAH
+15       3321     -1520    33000    Dischg       Normal       Normal       Normal        76%      75799 mAH
+Command completed successfully
+$$
+PYTES_debug>grp
+@              
+Group Volt   Curr   Temp1  Temp2  Temp3  VMax   VMin   TMax   TMin   Base.St  Volt.St  Curr.St  Temp.St  B.V.St   B.T.St   Soc(%) Coul(mAh)      
+0     53149  -7560  39000  36000  34000  3324   3319   33000  30000  Dischg   Normal   Normal   Normal   Normal   Normal   77%    388951         
+1     53150  -7100  38000  36000  34000  3324   3320   33000  30000  Dischg   Normal   Normal   Normal   Normal   Normal   79%    396858         
+2     -      -      -      -      -      -      -      -      -      none     -        -        -        -        -        -      -              
+3     -      -      -      -      -      -      -      -      -      none     -        -        -        -        -        -      -              
+4     -      -      -      -      -      -      -      -      -      none     -        -        -        -        -        -      -              
+5     -      -      -      -      -      -      -      -      -      none     -        -        -        -        -        -      -              
+6     -      -      -      -      -      -      -      -      -      none     -        -        -        -        -        -      -              
+7     -      -      -      -      -      -      -      -      -      none     -        -        -        -        -        -      -              
+Command completed successfully
+$$
+PYTES_debug>grp sys
+@                  
+Invalid command or fail to excute.
+Usage:
+group system info display
+$$
+PYTES_debug>grpsys
+@                 
+ Group System Information
+ ---------------------------------
+ Group total Num          : 2        
+ Group online Num         : 2        
+ Power total Num          : 10       
+ Power online Num         : 10       
+ System Volt              : 53148    mV
+ System Curr              : -14859   mA
+ Shunt Temp               : 0        mC
+ Prechg Temp              : 0        mC
+ System RC                : 785771   mAH
+ System FCC               : 1000000  mAH
+ Total Power In           : 12667    100WH
+ Total Power Out          : 11110    100WH
+ System SOC               : 78       %
+ System SOH               : 100      %
+ Work Status              : 1        
+ CMOS Status              : 3FF      
+ DMOS Status              : 3FF      
+ Highest voltage          : 3324     mV
+ Highest voltage num      : 21       
+ Average voltage          : 0        mV
+ Lowest voltage           : 3319     mV
+ Lowest voltage num       : 48       
+ Highest temperature      : 33000    mC
+ Highest temperature num  : 1        
+ Lowest temperature       : 30000    mC
+ Lowest temperature num   : 65       
+ Average temperature      : 31568    mC
+ Recommend chg voltage    : 56800    mV
+ Recommend dsg voltage    : 45500    mV
+ Recommend chg current    : 400000   mA
+ Recommend dsg current    : 400000   mA
+Command completed successfully
+$$
+PYTES_debug>grp 0
+@                
+ Group 0 Information
+ ---------------------------------
+ Power Num                : 5        
+ Present Flag             : 1f       
+ Group Volt               : 53150    mV
+ Group Curr               : -7501    mA
+ Env Temp                 : 38000    mC
+ Shunt Temp               : 36000    mC
+ Env Temp max             : 34000    mC
+ Group SOC                : 77       %
+ Group SOH                : 100      %
+ Group RC                 : 388917   mAH
+ Group FCC                : 500000   mAH
+ Power In                 : 6571     100WH
+ Power Out                : 5788     100WH
+ CMOS Status              : 1F       
+ DMOS Status              : 1F       
+ Highest voltage          : 3324     mV
+ Highest voltage num      : 19       
+ Lowest voltage           : 3319     mV
+ Lowest voltage num       : 48       
+ Highest temperature      : 33000    mC
+ Highest temperature num  : 1        
+ Lowest temperature       : 30000    mC
+ Lowest temperature num   : 65       
+ Recommend chg voltage    : 56800    mV
+ Recommend dsg voltage    : 45500    mV
+ Recommend chg current    : 200000   mA
+ Recommend dsg current    : 200000   mA
+Command completed successfully
+$$
+PYTES_debug>grp 1
+@                
+ Group 1 Information
+ ---------------------------------
+ Power Num                : 5        
+ Present Flag             : 1f       
+ Group Volt               : 53150    mV
+ Group Curr               : -7000    mA
+ Env Temp                 : 38000    mC
+ Shunt Temp               : 36000    mC
+ Env Temp max             : 34000    mC
+ Group SOC                : 79       %
+ Group SOH                : 100      %
+ Group RC                 : 396817   mAH
+ Group FCC                : 500000   mAH
+ Power In                 : 6096     100WH
+ Power Out                : 5322     100WH
+ CMOS Status              : 1F       
+ DMOS Status              : 1F       
+ Highest voltage          : 3324     mV
+ Highest voltage num      : 7        
+ Lowest voltage           : 3320     mV
+ Lowest voltage num       : 32       
+ Highest temperature      : 33000    mC
+ Highest temperature num  : 6        
+ Lowest temperature       : 30000    mC
+ Lowest temperature num   : 65       
+ Recommend chg voltage    : 56800    mV
+ Recommend dsg voltage    : 45500    mV
+ Recommend chg current    : 200000   mA
+ Recommend dsg current    : 200000   mA
+Command completed successfully
+$$
+PYTES_debug>bat 
+@              
+Invalid command or fail to excute.
+Usage:
+Battery data show - bat [pwr][index]
+$$
+PYTES_debug>bat 1
+@                
+Battery  Volt     Curr     Tempr    Base State   Volt. State  Curr. State  Temp. State  Coulomb     
+0        3321     -1490    33000    Dischg       Normal       Normal       Normal        76%      75782 mAH
+1        3321     -1490    33000    Dischg       Normal       Normal       Normal        76%      75782 mAH
+2        3321     -1490    33000    Dischg       Normal       Normal       Normal        76%      75782 mAH
+3        3320     -1490    33000    Dischg       Normal       Normal       Normal        76%      75782 mAH
+4        3322     -1490    33000    Dischg       Normal       Normal       Normal        76%      75782 mAH
+5        3321     -1490    33000    Dischg       Normal       Normal       Normal        76%      75782 mAH
+6        3321     -1490    33000    Dischg       Normal       Normal       Normal        76%      75782 mAH
+7        3321     -1490    33000    Dischg       Normal       Normal       Normal        76%      75782 mAH
+8        3321     -1490    33000    Dischg       Normal       Normal       Normal        76%      75782 mAH
+9        3321     -1490    33000    Dischg       Normal       Normal       Normal        76%      75782 mAH
+10       3321     -1490    33000    Dischg       Normal       Normal       Normal        76%      75782 mAH
+11       3321     -1490    33000    Dischg       Normal       Normal       Normal        76%      75782 mAH
+12       3322     -1490    33000    Dischg       Normal       Normal       Normal        76%      75782 mAH
+13       3322     -1490    33000    Dischg       Normal       Normal       Normal        76%      75782 mAH
+14       3321     -1490    33000    Dischg       Normal       Normal       Normal        76%      75782 mAH
+15       3320     -1490    33000    Dischg       Normal       Normal       Normal        76%      75782 mAH
+Command completed successfully
+$$
+PYTES_debug>pwr
+@              
+Power Volt   Curr   Tempr  Tlow   Thigh  Vlow   Vhigh  Base.St  Volt.St  Curr.St  Temp.St  Coulomb  Time                 B.V.St   B.T.St   Barcode              DevType             
+1     53143  -1532  34000  33000  33000  3321   3322   Dischg   Normal   Normal   Normal   76%      2026-03-03 20:43:23  Normal   Normal   74180000000*****     E-BOX-48100S-S      
+2     53166  -1698  34000  32000  32000  3322   3324   Dischg   Normal   Normal   Normal   76%      2026-03-03 20:43:25  Normal   Normal   64180000000*****     E-BOX-48100S-S      
+3     53136  -1600  33000  31000  32000  3319   3322   Dischg   Normal   Normal   Normal   79%      2026-03-03 20:43:24  Normal   Normal   24180000000*****     E-BOX-48100S-S      
+4     53167  -1551  32000  31000  31000  3321   3324   Dischg   Normal   Normal   Normal   79%      2026-03-03 20:43:25  Normal   Normal   54180000000*****     E-BOX-48100S-S      
+5     53141  -1562  31000  30000  30000  3320   3322   Dischg   Normal   Normal   Normal   79%      2026-03-03 20:43:26  Normal   Normal   04180000000*****     E-BOX-48100S-S      
+6     -      -      -      -      -      -      -      Absent   -        -        -        -        -                    -        -        -                    -                   
+Command completed successfully
+$$
+PYTES_debug>help
+@               
+Local command:
+balance  balance info - balance
+bat      Battery data show - bat [pwr][index]
+ubver    updata backup version - ubver
+calcurr  Current calibrate coefficient - calcurr [current]
+zerocurr Zero curren offset - zerocurr
+ctrl     Contrl IO - ctrl [cfet/dfet/buzz/heat] [on/off]
+data     History data load - data [event/history][item]
+datac    Clear data - datac [event/history]
+datalist Show recorded data - datalist {event/history}{item}}
+debug    debug mode - debug [cani/cane/485]
+disp     Display Info at regular intervals - disp [sys]
+eepe     EEPROM erase - eepe
+eepr     EEPROM read - eepr [Offset][size]
+eepw     EEPROM write - eepw [Offset][Val][/size]
+flae     Extend flash erase - flae
+flar     Extend flash read - flar [Offset][size]
+flaw     Extend flash write - flaw [Offset][Val][/size]
+log      Log information show - log                    
+logc     Log clear - logc
+logt     Log test - logt [data]
+manu     set manu date - manu [year] [month] [day]
+info     Device infomation - info
+help     Help [cmd]
+login    Login Admin mode - login [password]
+logout   user mode  - logout
+pwr      Power data show - pwr [index]
+pwrsys   power system info display
+grp      group system info display
+grpsys   group system info display
+ci       Current Comm Info
+ct       Track Comm Port Data
+re       Send Command To the Specified Power - re [addr][command]
+tmpicr   TMPR IC read - tmpicr [Offset]
+tmpicw   TMPR IC write - tmpicw [Offset][Val]
+tmpicd   TMPR IC data show - tmpicd 
+tmpicsh  TMPR IC Reg Show - tmpicsh               
+setprt   set protocol type - setprt [prot]
+sim      sim [volt/curr/temp/comm][value]
+shut     Shut down - shut
+soh      State of health - soh [addr]
+stat     Statistic data show - stat
+statc    Clear statistic - statc
+tbar     Test write Barcode - tbar[reg]
+tbuz     Test Buzzer - tbuz
+tdip     Test Dip - tdip
+time     Time - time [year] [month] [day] [hour] [minute] [second]
+tled     Test Led - tled
+tcan     Test can port - tcan [port#]
+trst     Test Soft Reset - trst
+tusart   Usart test - tusart[len]
+updata   updata system - updata
+twdg     Stop feeding watchdog - wdg
+uboot    updata boot - uboot
+ver      firmware info - ver                      
+**********************************************************
+Remote command:
+ctrl     Contrl IO - ctrl [cfet/dfet/buzz/heat] [on/off]
+data     History data load - data [event/history][item]
+info     Device infomation - info
+login    Login Admin mode - login [password]
+logout   user mode  - logout
+prot     Protect ctrl - prot [bov/bhv/blv/buv/pov/phv/plv/puv/cbot/cbht/cblt/cbut/dbot/dbht/dblt/dbut/pot/pht/
+         plt/put/coc/coc2/coca/doc/doc2/doca/sc/default][en/dis]
+soh      State of health - soh [addr]
+Command completed successfully
+$$
+PYTES_debug>logout
+@                 
+Command completed successfully
+$$
+PYTES>help
+@         
+Local command:
+balance  balance info - balance
+bat      Battery data show - bat [pwr][index]
+calcurr  Current calibrate coefficient - calcurr [current]
+zerocurr Zero curren offset - zerocurr
+data     History data load - data [event/history][item]
+datalist Show recorded data - datalist {event/history}{item}}
+disp     Display Info at regular intervals - disp [sys]
+log      Log information show - log
+info     Device infomation - info
+help     Help [cmd]
+login    Login Admin mode - login [password]
+logout   user mode  - logout
+pwr      Power data show - pwr [index]
+shut     Shut down - shut
+soh      State of health - soh [addr]
+stat     Statistic data show - stat
+time     Time - time [year] [month] [day] [hour] [minute] [second]
+trst     Test Soft Reset - trst                                   
+updata   updata system - updata
+ver      firmware info - ver
+**********************************************************
+Remote command:
+data     History data load - data [event/history][item]
+info     Device infomation - info
+login    Login Admin mode - login [password]
+logout   user mode  - logout
+soh      State of health - soh [addr]
+Command completed successfully
+$$
+PYTES>login config
+@                 
+Command completed successfully
+$$
+PYTES_config>help
+@                
+Local command:
+balance  balance info - balance
+bat      Battery data show - bat [pwr][index]
+ubver    updata backup version - ubver
+calcurr  Current calibrate coefficient - calcurr [current]
+zerocurr Zero curren offset - zerocurr
+ctrl     Contrl IO - ctrl [cfet/dfet/buzz/heat] [on/off]
+data     History data load - data [event/history][item]
+datac    Clear data - datac [event/history]
+datalist Show recorded data - datalist {event/history}{item}}
+debug    debug mode - debug [cani/cane/485]
+disp     Display Info at regular intervals - disp [sys]
+log      Log information show - log
+logc     Log clear - logc
+manu     set manu date - manu [year] [month] [day]
+info     Device infomation - info
+help     Help [cmd]
+login    Login Admin mode - login [password]
+logout   user mode  - logout                      
+pwr      Power data show - pwr [index]
+setprt   set protocol type - setprt [prot]
+shut     Shut down - shut
+soh      State of health - soh [addr]
+stat     Statistic data show - stat
+statc    Clear statistic - statc
+time     Time - time [year] [month] [day] [hour] [minute] [second]
+trst     Test Soft Reset - trst
+updata   updata system - updata
+uboot    updata boot - uboot
+ver      firmware info - ver
+**********************************************************
+Remote command:
+ctrl     Contrl IO - ctrl [cfet/dfet/buzz/heat] [on/off]
+data     History data load - data [event/history][item]
+info     Device infomation - info
+login    Login Admin mode - login [password]
+logout   user mode  - logout
+prot     Protect ctrl - prot [bov/bhv/blv/buv/pov/phv/plv/puv/cbot/cbht/cblt/cbut/dbot/dbht/dblt/dbut/pot/pht/
+         plt/put/coc/coc2/coca/doc/doc2/doca/sc/default][en/dis]
+soh      State of health - soh [addr]
+Command completed successfully
+$$
+PYTES_config>pwr
+@               
+Power Volt   Curr   Tempr  Tlow   Thigh  Vlow   Vhigh  Base.St  Volt.St  Curr.St  Temp.St  Coulomb  Time                 B.V.St   B.T.St   Barcode              DevType             
+1     53146  -1489  34000  33000  33000  3321   3322   Dischg   Normal   Normal   Normal   76%      2026-03-03 20:45:30  Normal   Normal   7418000000038604     E-BOX-48100S-S      
+2     53172  -1696  34000  32000  32000  3322   3324   Dischg   Normal   Normal   Normal   76%      2026-03-03 20:45:32  Normal   Normal   6418000000038254     E-BOX-48100S-S      
+3     53136  -1554  33000  31000  32000  3319   3322   Dischg   Normal   Normal   Normal   79%      2026-03-03 20:45:31  Normal   Normal   2418000000033382     E-BOX-48100S-S      
+4     53167  -1532  32000  31000  31000  3321   3324   Dischg   Normal   Normal   Normal   79%      2026-03-03 20:45:32  Normal   Normal   5418000000033439     E-BOX-48100S-S      
+5     53136  -1507  31000  30000  30000  3320   3322   Dischg   Normal   Normal   Normal   79%      2026-03-03 20:45:33  Normal   Normal   0418000000034151     E-BOX-48100S-S      
+6     -      -      -      -      -      -      -      Absent   -        -        -        -        -                    -        -        -                    -                   
+Command completed successfully
+$$
+PYTES_config>info
+@                
+Device address      : 1
+Manufacturer        : PYTES
+Device name         : E-BOX-48100S-M
+Board version       : SQBMSV110
+Main Soft version   : PLBCU-06P-48V-V1.02.009.H
+Iterate version     : PLBCU-06P-48V-V1.02.009.H.T6
+Soft  version       : V2.9
+Boot  version       : V1.11
+Comm version        : V2.0
+Release Date        : 25-11-10
+Manu Date           : 
+Barcode             : 04180000000*****
+Board ID            : GD343036530139323233*****
+Board SRAM Size     : 96KB
+Board FLASH Size    : 1024KB
+Specification       : 51.2V/100AH
+Cell Number         : 16
+Max Dischg Curr     : -102000mA
+Max Charge Curr     : 102000mA
+Console Port rate   : 115200
+Command completed successfully
+$$
+PYTES_config>login debug
+@                       
+Quit current mode
+Invalid command or fail to excute.
+Usage:
+Login Admin mode - login [password]
+$$
+PYTES_config>logout
+@                  
+Command completed successfully
+$$
+PYTES>login debug
+@                
+Command completed successfully
+$$
+PYTES_debug>help
+@               
+Local command:
+balance  balance info - balance
+bat      Battery data show - bat [pwr][index]
+ubver    updata backup version - ubver
+calcurr  Current calibrate coefficient - calcurr [current]
+zerocurr Zero curren offset - zerocurr
+ctrl     Contrl IO - ctrl [cfet/dfet/buzz/heat] [on/off]
+data     History data load - data [event/history][item]
+datac    Clear data - datac [event/history]
+datalist Show recorded data - datalist {event/history}{item}}
+debug    debug mode - debug [cani/cane/485]
+disp     Display Info at regular intervals - disp [sys]
+eepe     EEPROM erase - eepe
+eepr     EEPROM read - eepr [Offset][size]
+eepw     EEPROM write - eepw [Offset][Val][/size]
+flae     Extend flash erase - flae
+flar     Extend flash read - flar [Offset][size]
+flaw     Extend flash write - flaw [Offset][Val][/size]
+log      Log information show - log                    
+logc     Log clear - logc
+logt     Log test - logt [data]
+manu     set manu date - manu [year] [month] [day]
+info     Device infomation - info
+help     Help [cmd]
+login    Login Admin mode - login [password]
+logout   user mode  - logout
+pwr      Power data show - pwr [index]
+pwrsys   power system info display
+grp      group system info display
+grpsys   group system info display
+ci       Current Comm Info
+ct       Track Comm Port Data
+re       Send Command To the Specified Power - re [addr][command]
+tmpicr   TMPR IC read - tmpicr [Offset]
+tmpicw   TMPR IC write - tmpicw [Offset][Val]
+tmpicd   TMPR IC data show - tmpicd 
+tmpicsh  TMPR IC Reg Show - tmpicsh               
+setprt   set protocol type - setprt [prot]
+sim      sim [volt/curr/temp/comm][value]
+shut     Shut down - shut
+soh      State of health - soh [addr]
+stat     Statistic data show - stat
+statc    Clear statistic - statc
+tbar     Test write Barcode - tbar[reg]
+tbuz     Test Buzzer - tbuz
+tdip     Test Dip - tdip
+time     Time - time [year] [month] [day] [hour] [minute] [second]
+tled     Test Led - tled
+tcan     Test can port - tcan [port#]
+trst     Test Soft Reset - trst
+tusart   Usart test - tusart[len]
+updata   updata system - updata
+twdg     Stop feeding watchdog - wdg
+uboot    updata boot - uboot
+ver      firmware info - ver                      
+**********************************************************
+Remote command:
+ctrl     Contrl IO - ctrl [cfet/dfet/buzz/heat] [on/off]
+data     History data load - data [event/history][item]
+info     Device infomation - info
+login    Login Admin mode - login [password]
+logout   user mode  - logout
+prot     Protect ctrl - prot [bov/bhv/blv/buv/pov/phv/plv/puv/cbot/cbht/cblt/cbut/dbot/dbht/dblt/dbut/pot/pht/
+         plt/put/coc/coc2/coca/doc/doc2/doca/sc/default][en/dis]
+soh      State of health - soh [addr]
+Command completed successfully
+$$
+PYTES_debug>logout
+@                 
+Command completed successfully
+$$
+PYTES>login login
+@                
+ wrong mode
+Invalid command or fail to excute.
+Usage:
+Login Admin mode - login [password]
+$$
+PYTES>help    
+@         
+Local command:
+balance  balance info - balance
+bat      Battery data show - bat [pwr][index]
+calcurr  Current calibrate coefficient - calcurr [current]
+zerocurr Zero curren offset - zerocurr
+data     History data load - data [event/history][item]
+datalist Show recorded data - datalist {event/history}{item}}
+disp     Display Info at regular intervals - disp [sys]
+log      Log information show - log
+info     Device infomation - info
+help     Help [cmd]
+login    Login Admin mode - login [password]
+logout   user mode  - logout
+pwr      Power data show - pwr [index]
+shut     Shut down - shut
+soh      State of health - soh [addr]
+stat     Statistic data show - stat
+time     Time - time [year] [month] [day] [hour] [minute] [second]
+trst     Test Soft Reset - trst                                   
+updata   updata system - updata
+ver      firmware info - ver
+**********************************************************
+Remote command:
+data     History data load - data [event/history][item]
+info     Device infomation - info
+login    Login Admin mode - login [password]
+logout   user mode  - logout
+soh      State of health - soh [addr]
+Command completed successfully
+$$
+PYTES>login settings
+@                   
+ wrong mode
+Invalid command or fail to excute.
+Usage:
+Login Admin mode - login [password]
+$$
+PYTES>login parameters
+@                     
+ wrong mode
+Invalid command or fail to excute.
+Usage:
+Login Admin mode - login [password]
+$$
+PYTES>login config
+@                 
+Command completed successfully
+$$
+PYTES_config>help
+@                
+Local command:
+balance  balance info - balance
+bat      Battery data show - bat [pwr][index]
+ubver    updata backup version - ubver
+calcurr  Current calibrate coefficient - calcurr [current]
+zerocurr Zero curren offset - zerocurr
+ctrl     Contrl IO - ctrl [cfet/dfet/buzz/heat] [on/off]
+data     History data load - data [event/history][item]
+datac    Clear data - datac [event/history]
+datalist Show recorded data - datalist {event/history}{item}}
+debug    debug mode - debug [cani/cane/485]
+disp     Display Info at regular intervals - disp [sys]
+log      Log information show - log
+logc     Log clear - logc
+manu     set manu date - manu [year] [month] [day]
+info     Device infomation - info
+help     Help [cmd]
+login    Login Admin mode - login [password]
+logout   user mode  - logout                      
+pwr      Power data show - pwr [index]
+setprt   set protocol type - setprt [prot]
+shut     Shut down - shut
+soh      State of health - soh [addr]
+stat     Statistic data show - stat
+statc    Clear statistic - statc
+time     Time - time [year] [month] [day] [hour] [minute] [second]
+trst     Test Soft Reset - trst
+updata   updata system - updata
+uboot    updata boot - uboot
+ver      firmware info - ver
+**********************************************************
+Remote command:
+ctrl     Contrl IO - ctrl [cfet/dfet/buzz/heat] [on/off]
+data     History data load - data [event/history][item]
+info     Device infomation - info
+login    Login Admin mode - login [password]
+logout   user mode  - logout
+prot     Protect ctrl - prot [bov/bhv/blv/buv/pov/phv/plv/puv/cbot/cbht/cblt/cbut/dbot/dbht/dblt/dbut/pot/pht/
+         plt/put/coc/coc2/coca/doc/doc2/doca/sc/default][en/dis]
+soh      State of health - soh [addr]
+Command completed successfully
+$$
+PYTES_config>soh
+@               
+Invalid command or fail to excute.
+Usage:
+State of health - soh [addr]
+$$
+PYTES_config>soh 1
+@                 
+Power   1
+Battery    Voltage    SOHCount   SOHStatus 
+0          3320       0          00000000
+1          3321       0          00000000
+2          3322       0          00000000
+3          3322       0          00000000
+4          3322       0          00000000
+5          3322       0          00000000
+6          3322       0          00000000
+7          3322       0          00000000
+8          3322       0          00000000
+9          3322       0          00000000
+10         3321       0          00000000
+11         3322       0          00000000
+12         3322       0          00000000
+13         3322       0          00000000
+14         3321       0          00000000
+15         3321       0          00000000
+Command completed successfully
+$$
+PYTES_config>balance
+@                   
+ power     balance   
+ 1         0         
+ 2         0         
+ 3         0         
+ 4         0         
+ 5         0         
+Command completed successfully
+$$
+PYTES_config>balance 1
+@                     
+Usage:
+balance info - balance
+$$
+PYTES_config>disp
+@                
+Invalid command or fail to excute.
+Usage:
+Display Info at regular intervals - disp [sys]
+$$
+PYTES_config>disp sys
+@                    
+Command completed successfully
+$$
+PYTES_config>
+ID   Time                 Volt   Curr.S   Curr.M   S.Temp   EnvTemp  EnvTMax  B.TMin   B.TMax   B.VMin   B.VMax   Base.St  Volt.St  Curr.St  Temp.St  B.V.St   B.T.St   Per%   Coul(mAh)      
+1    2026-03-03 20:50:37  53150  -8261    -9877    36000    38000    34000    30000    33000    3319     3324     Dischg   Normal   Normal   Normal   Normal   Normal   77%    387928         
+2    2026-03-03 20:50:39  53133  -8413    -22304   36000    38000    34000    30000    33000    3318     3323     Dischg   Normal   Normal   Normal   Normal   Normal   77%    387924         
+3    2026-03-03 20:50:41  53111  -18763   -25295   36000    38000    34000    30000    33000    3315     3322     Dischg   Normal   Normal   Normal   Normal   Normal   77%    387908         
+4    2026-03-03 20:50:43  53100  -24223   -27492   36000    38000    34000    30000    33000    3315     3322     Dischg   Normal   Normal   Normal   Normal   Normal   77%    387892         
+5    2026-03-03 20:50:45  53096  -26823   -27793   36000    38000    34000    30000    33000    3316     3321     Dischg   Normal   Normal   Normal   Normal   Normal   77%    387883         
+6    2026-03-03 20:50:47  53091  -27739   -28210   36000    38000    34000    30000    33000    3314     3321     Dischg   Normal   Normal   Normal   Normal   Normal   77%    387863         
+7    2026-03-03 20:50:49  53087  -28103   -28684   36000    38000    34000    30000    33000    3314     3321     Dischg   Normal   Normal   Normal   Normal   Normal   77%    387851         
+8    2026-03-03 20:50:51  53085  -28515   -29081   36000    38000    34000    30000    33000    3315     3320     Dischg   Normal   Normal   Normal   Normal   Normal   77%    387838         
+9    2026-03-03 20:50:53  53081  -29127   -29363   36000    38000    34000    30000    33000    3313     3320     Dischg   Normal   Normal   Normal   Normal   Normal   77%    387822         
+10   2026-03-03 20:50:55  53077  -29643   -30093   36000    38000    34000    30000    33000    3313     3320     Dischg   Normal   Normal   Normal   Normal   Normal   77%    387801         
+11   2026-03-03 20:50:57  53073  -30146   -30964   36000    38000    34000    30000    33000    3314     3320     Dischg   Normal   Normal   Normal   Normal   Normal   77%    387785         
+12   2026-03-03 20:50:59  53069  -30799   -30932   36000    38000    34000    30000    33000    3312     3319     Dischg   Normal   Normal   Normal   Normal   Normal   77%    387761         
+13   2026-03-03 20:51:01  53067  -31088   -30548   36000    38000    34000    30000    33000    3312     3319     Dischg   Normal   Normal   Normal   Normal   Normal   77%    387745         
+14   2026-03-03 20:51:03  53066  -31171   -31297   36000    38000    34000    30000    33000    3313     3320     Dischg   Normal   Normal   Normal   Normal   Normal   77%    387733         
+15   2026-03-03 20:51:05  53063  -31299   -31278   36000    38000    34000    30000    33000    3313     3319     Dischg   Normal   Normal   Normal   Normal   Normal   77%    387717         
+16   2026-03-03 20:51:07  53061  -31438   -31194   36000    38000    34000    30000    33000    3312     3319     Dischg   Normal   Normal   Normal   Normal   Normal   77%    387697         
+17   2026-03-03 20:51:09  53060  -31502   -30881   36000    38000    34000    30000    33000    3312     3319     Dischg   Normal   Normal   Normal   Normal   Normal   77%    387685         
+18   2026-03-03 20:51:11  53058  -31400   -31284   36000    38000    34000    30000    33000    3313     3320     Dischg   Normal   Normal   Normal   Normal   Normal   77%    387661      
+19   2026-03-03 20:51:13  53056  -31360   -31015   36000    38000    34000    30000    33000    3312     3320     Dischg   Normal   Normal   Normal   Normal   Normal   77%    387641         
+20   2026-03-03 20:51:15  53054  -31366   -31201   36000    38000    34000    30000    33000    3312     3319     Dischg   Normal   Normal   Normal   Normal   Normal   77%    387629    
+21   2026-03-03 20:51:17  53055  -31223   -31284   36000    38000    34000    30000    33000    3312     3320     Dischg   Normal   Normal   Normal   Normal   Normal   77%    387609         
+22   2026-03-03 20:51:19  53052  -31139   -31207   36000    38000    34000    30000    33000    3312     3320     Dischg   Normal   Normal   Normal   Normal   Normal   77%    387593         
+23   2026-03-03 20:51:21  53051  -31250   -31272   36000    38000    34000    30000    33000    3312     3319     Dischg   Normal   Normal   Normal   Normal   Normal   77%    387581         
+24   2026-03-03 20:51:23  53050  -31244   -30785   36000    38000    34000    30000    33000    3311     3319     Dischg   Normal   Normal   Normal   Normal   Normal   77%    387561         
+25   2026-03-03 20:51:25  53050  -31190   -30894   36000    38000    34000    30000    33000    3313     3319     Dischg   Normal   Normal   Normal   Normal   Normal   77%    387545     
+26   2026-03-03 20:51:27  53048  -31088   -30567   36000    38000    34000    30000    33000    3311     3318     Dischg   Normal   Normal   Normal   Normal   Normal   77%    387529         
+27   2026-03-03 20:51:29  53047  -30933   -30695   36000    38000    34000    30000    33000    3311     3318     Dischg   Normal   Normal   Normal   Normal   Normal   77%    387505         
+28   2026-03-03 20:51:31  53047  -30863   -30932   36000    38000    34000    30000    33000    3312     3318     Dischg   Normal   Normal   Normal   Normal   Normal   77%    387488         
+29   2026-03-03 20:51:33  53046  -30897   -30945   36000    38000    34000    30000    33000    3311     3319     Dischg   Normal   Normal   Normal   Normal   Normal   77%    387476         
+30   2026-03-03 20:51:35  53045  -30978   -30535   36000    38000    34000    30000    33000    3312     3319     Dischg   Normal   Normal   Normal   Normal   Normal   77%    387460        
+31   2026-03-03 20:51:37  53043  -31017   -30817   36000    38000    34000    30000    33000    3311     3318     Dischg   Normal   Normal   Normal   Normal   Normal   77%    387444         
+32   2026-03-03 20:51:39  53041  -31017   -30612   36000    38000    34000    30000    33000    3311     3319     Dischg   Normal   Normal   Normal   Normal   Normal   77%    387425        
+33   2026-03-03 20:51:41  53041  -30897   -30740   36000    38000    34000    30000    33000    3311     3318     Dischg   Normal   Normal   Normal   Normal   Normal   77%    387401   
+34   2026-03-03 20:51:43  53039  -30795   -30323   36000    38000    34000    30000    33000    3312     3318     Dischg   Normal   Normal   Normal   Normal   Normal   77%    387385        
+35   2026-03-03 20:51:45  53038  -30821   -30701   36000    38000    34000    30000    33000    3312     3319     Dischg   Normal   Normal   Normal   Normal   Normal   77%    387373      
+36   2026-03-03 20:51:47  53037  -30893   -30689   36000    38000    34000    30000    33000    3311     3318     Dischg   Normal   Normal   Normal   Normal   Normal   77%    387357    
+37   2026-03-03 20:51:49  53038  -30853   -30458   36000    38000    34000    30000    33000    3310     3318     Dischg   Normal   Normal   Normal   Normal   Normal   77%    387341     
+38   2026-03-03 20:51:51  53036  -30790   -30279   36000    38000    34000    30000    33000    3310     3318     Dischg   Normal   Normal   Normal   Normal   Normal   77%    387324         
+39   2026-03-03 20:51:53  53035  -30716   -30279   36000    38000    34000    30000    33000    3310     3318     Dischg   Normal   Normal   Normal   Normal   Normal   77%    387299     
+40   2026-03-03 20:51:55  53035  -30620   -30343   36000    38000    34000    30000    33000    3310     3318     Dischg   Normal   Normal   Normal   Normal   Normal   77%    387283   
