@@ -33,6 +33,8 @@ Once configured, you can use sensors as described below for your projects.
 
 ![pytesebox](https://github.com/user-attachments/assets/699cedf4-fe41-476b-9a39-41ebb7c520f5)
 
+<img width="1143" height="759" alt="image" src="https://github.com/user-attachments/assets/788da967-e44e-4f99-b5d9-3b149abf1617" />
+
 
 Instructions for setting up Pytes E-Box in ESPHome.
 
