@@ -102,24 +102,54 @@ void PytesEBoxComponent::add_polling_command_(const char *command, int _index, E
   */
 }
 
+// uint8_t PytesEBoxComponent::send_command_again() {
+//   if (this->state_ == STATE_WAIT) {
+//     this->buffer_index_read_ = 0;
+//     this->buffer_index_write_ = 0;
+//     this->clear_uart_buffer();
+//     this->write_str(this->cmd_queue_[this->command_queue_position_].command.c_str());
+//     this->write_str("\n");
+//     this->state_ = STATE_POLL;
+//     ESP_LOGI(TAG, "Retrying command '%s' from index: %d, retry count: %d, at time: %lu ms",
+//              this->cmd_queue_[this->command_queue_position_].command.c_str(),
+//              this->command_queue_position_,
+//              this->command_retries_,
+//              millis());
+//     this->command_retries_++;
+//     return 1;
+//   }
+//   return 0;
+// }
+
 uint8_t PytesEBoxComponent::send_command_again() {
   if (this->state_ == STATE_WAIT) {
+    // CRITICAL: Cap retries to prevent infinite loops
+    if (this->cmd_queue_[this->command_queue_position_].errors >= 5) {
+      ESP_LOGW(TAG, "Max retries (5) exceeded for '%s', skipping to next command", 
+               this->cmd_queue_[this->command_queue_position_].command.c_str());
+      this->cmd_queue_[this->command_queue_position_].errors = 0;
+      this->state_ = STATE_SEND_NEXT_COMMAND;
+      return 0;
+    }
+    
     this->buffer_index_read_ = 0;
     this->buffer_index_write_ = 0;
     this->clear_uart_buffer();
     this->write_str(this->cmd_queue_[this->command_queue_position_].command.c_str());
     this->write_str("\n");
     this->state_ = STATE_POLL;
-    ESP_LOGI(TAG, "Retrying command '%s' from index: %d, retry count: %d, at time: %lu ms",
+    
+    ESP_LOGI(TAG, "Retrying '%s' (try %d/5)", 
              this->cmd_queue_[this->command_queue_position_].command.c_str(),
-             this->command_queue_position_,
-             this->command_retries_,
-             millis());
+             this->cmd_queue_[this->command_queue_position_].errors + 1);
+    
+    this->cmd_queue_[this->command_queue_position_].errors++;
     this->command_retries_++;
     return 1;
   }
   return 0;
 }
+
 
 uint8_t PytesEBoxComponent::send_next_command_() {
     if (this->cmd_queue_[this->command_queue_position_].command != "") {
@@ -240,6 +270,9 @@ void PytesEBoxComponent::loop() {
           break;
       }
   }
+
+    // Reset errors after successful command
+    this->cmd_queue_[this->command_queue_position_].errors = 0;
     this->state_ = STATE_SEND_NEXT_COMMAND;
     ESP_LOGVV(TAG, "Command Complete, switch to STATE_POLL_COMPLETE");
     if (this->command_queue_position_ == this->command_queue_max_) { this->state_ = STATE_IDLE; ESP_LOGVV(TAG, "Command Complete, switch to STATE_IDLE"); }
