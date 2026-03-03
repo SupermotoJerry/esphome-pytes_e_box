@@ -363,10 +363,10 @@ void PytesEBoxComponent::processData_batIndexLine(std::string &buffer, int bat_n
   if (isdigit(buffer[0])) {
     PytesEBoxListener::bat_index_LineContents l{};
    
-//   const int parsed = sscanf(                                                                                  // NOLINT
-//      buffer.c_str(),"%d %d %d %7s %7s %7s %7s %d%% %d",                                                        // NOLINT
-//      &l.cell_num, &l.cell_volt, &l.cell_tempr, l.cell_baseState, l.cell_voltState,                             // NOLINT
-//      l.cell_currState, l.cell_tempState, &l.cell_coulomb, &l.cell_curr);                                       // NOLINT
+//   const int parsed = sscanf(                                                                                // NOLINT
+//      buffer.c_str(),"%d %d %d %7s %7s %7s %7s %d%% %d",                                                     // NOLINT
+//      &l.cell_num, &l.cell_volt, &l.cell_tempr, l.cell_baseState, l.cell_voltState,                          // NOLINT
+//      l.cell_currState, l.cell_tempState, &l.cell_coulomb, &l.cell_curr);                                    // NOLINT
     const int parsed = sscanf(                                                                                 // NOLINT
       buffer.c_str(),"%d %d %d %d %7s %7s %7s %7s %d%% %d",                                                    // NOLINT    
       &l.cell_num, &l.cell_volt, &l.cell_curr, &l.cell_tempr, l.cell_baseState, l.cell_voltState,              // NOLINT               
@@ -394,7 +394,7 @@ void PytesEBoxComponent::processData_batIndexLine(std::string &buffer, int bat_n
 }
 
 void PytesEBoxComponent::processData_pwrLine(std::string &buffer) {
-  if (isdigit(buffer[0]) && (buffer.find("Absent") == -1)) {
+  if (isdigit(buffer[0]) && (buffer.find("Absent") == std::string::npos)) {
   PytesEBoxListener::pwr_LineContents l{};
   const int parsed = sscanf(                                                                                      // NOLINT
     buffer.c_str(),"%d %d %d %d %d %d %d %d %7s %7s %7s %7s %d%% %d-%d-%d %d:%d:%d %s %s %s %s",                  // NOLINT
