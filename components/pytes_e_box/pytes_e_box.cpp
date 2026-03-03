@@ -359,39 +359,79 @@ void PytesEBoxComponent::loop() {
   }/** Read UART Buffer End*/
 }
 
-void PytesEBoxComponent::processData_batIndexLine(std::string &buffer, int bat_num) {
-  if (isdigit(buffer[0])) {
-    PytesEBoxListener::bat_index_LineContents l{};
+// void PytesEBoxComponent::processData_batIndexLine(std::string &buffer, int bat_num) {
+//   if (isdigit(buffer[0])) {
+//     PytesEBoxListener::bat_index_LineContents l{};
    
-//   const int parsed = sscanf(                                                                                // NOLINT
-//      buffer.c_str(),"%d %d %d %7s %7s %7s %7s %d%% %d",                                                     // NOLINT
-//      &l.cell_num, &l.cell_volt, &l.cell_tempr, l.cell_baseState, l.cell_voltState,                          // NOLINT
-//      l.cell_currState, l.cell_tempState, &l.cell_coulomb, &l.cell_curr);                                    // NOLINT
-    const int parsed = sscanf(                                                                                 // NOLINT
-      buffer.c_str(),"%d %d %d %d %7s %7s %7s %7s %d%% %d",                                                    // NOLINT    
-      &l.cell_num, &l.cell_volt, &l.cell_curr, &l.cell_tempr, l.cell_baseState, l.cell_voltState,              // NOLINT               
-      l.cell_currState, l.cell_tempState, &l.cell_coulomb);                                                    // NOLINT
+// //   const int parsed = sscanf(                                                                                // NOLINT
+// //      buffer.c_str(),"%d %d %d %7s %7s %7s %7s %d%% %d",                                                     // NOLINT
+// //      &l.cell_num, &l.cell_volt, &l.cell_tempr, l.cell_baseState, l.cell_voltState,                          // NOLINT
+// //      l.cell_currState, l.cell_tempState, &l.cell_coulomb, &l.cell_curr);                                    // NOLINT
+//     const int parsed = sscanf(                                                                                 // NOLINT
+//       buffer.c_str(),"%d %d %d %d %7s %7s %7s %7s %d%% %d",                                                    // NOLINT    
+//       &l.cell_num, &l.cell_volt, &l.cell_curr, &l.cell_tempr, l.cell_baseState, l.cell_voltState,              // NOLINT               
+//       l.cell_currState, l.cell_tempState, &l.cell_coulomb);                                                    // NOLINT
     
-    if (parsed != 9) {
-      ESP_LOGE(TAG, "invalid line: found only %d, should be 9 items. in line %d\n: %s",
-                    parsed, l.cell_num, buffer.substr(0, buffer.size() - 2).c_str());
-      return;
-    }
+//     if (parsed != 9) {
+//       ESP_LOGE(TAG, "invalid line: found only %d, should be 9 items. in line %d\n: %s",
+//                     parsed, l.cell_num, buffer.substr(0, buffer.size() - 2).c_str());
+//       return;
+//     }
 
-    /*
-    if (l.cell_num <= 0) {
-        ESP_LOGE(TAG, "invalid cell_num in line %s", buffer.substr(0, buffer.size() - 2).c_str());
+//     /*
+//     if (l.cell_num <= 0) {
+//         ESP_LOGE(TAG, "invalid cell_num in line %s", buffer.substr(0, buffer.size() - 2).c_str());
+//     return;
+//     }
+//     */
+
+//     l.bat_num = bat_num;
+
+//     for (PytesEBoxListener *listener : this->listeners_) {
+//       listener->on_batn_line_read(&l);
+//     }
+//   }
+// }
+
+void PytesEBoxComponent::processData_batIndexLine(std::string &buffer, int bat_num) {
+  if (!isdigit(buffer[0])) return;
+  
+  PytesEBoxListener::bat_index_LineContents l{};
+  std::istringstream iss(buffer);
+  std::string token;
+  std::vector<std::string> tokens;
+  
+  while (iss >> token) tokens.push_back(token);
+  
+  if (tokens.size() < 10) {
+    ESP_LOGW(TAG, "Short bat line (%d tokens): %s", tokens.size(), buffer.c_str());
     return;
-    }
-    */
-
-    l.bat_num = bat_num;
-
-    for (PytesEBoxListener *listener : this->listeners_) {
-      listener->on_batn_line_read(&l);
-    }
+  }
+  
+  // LV1 format: <cell> <volt> <curr> <temp> <base> <vst> <cst> <tst> <soc%> <mah> [mAH]
+  l.bat_num      = bat_num;
+  l.cell_num     = atoi(tokens[0].c_str());
+  l.cell_volt    = atoi(tokens[1].c_str());
+  l.cell_curr    = atoi(tokens[2].c_str());
+  l.cell_tempr   = atoi(tokens[3].c_str());
+  l.cell_coulomb = atoi(tokens[9].c_str());  // mAh before "mAH"
+  
+  // Optional: states (tokens 4-7)
+  strncpy(l.cell_baseState, tokens[4].c_str(), sizeof(l.cell_baseState)-1);
+  strncpy(l.cell_voltState, tokens[5].c_str(), sizeof(l.cell_voltState)-1);
+  strncpy(l.cell_currState, tokens[6].c_str(), sizeof(l.cell_currState)-1);
+  strncpy(l.cell_tempState, tokens[7].c_str(), sizeof(l.cell_tempState)-1);
+  
+  ESP_LOGD(TAG, "bat%d cell%d: V=%.3fA C=%.3fA T=%.1f°C coul=%d",
+           bat_num, l.cell_num,
+           l.cell_volt/1000.0f, l.cell_curr/1000.0f, 
+           l.cell_tempr/1000.0f, l.cell_coulomb);
+  
+  for (PytesEBoxListener *listener : this->listeners_) {
+    listener->on_batn_line_read(&l);
   }
 }
+
 
 void PytesEBoxComponent::processData_pwrLine(std::string &buffer) {
   if (isdigit(buffer[0]) && (buffer.find("Absent") == std::string::npos)) {
