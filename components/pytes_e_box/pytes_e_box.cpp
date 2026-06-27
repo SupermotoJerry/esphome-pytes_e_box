@@ -3,7 +3,6 @@
 #include "esphome/core/helpers.h"
 #include <stdlib.h>
 #include <sstream>
-#include <regex>
 
 namespace esphome {
 namespace pytes_e_box {
@@ -19,7 +18,31 @@ int recv = 0;
 int jobCount = 0;
 int __run_ = 0;
 bool praseData = false;
-std::regex pattern("(^\\s|\\s{2,})");
+
+// Replacement for the former std::regex_replace(buffer, "(^\\s|\\s{2,})", "").
+// std::regex faults the stack on the ESP32-C6 (Load access fault crash), so this
+// reproduces the same effect by hand: drop leading/trailing whitespace and any
+// run of 2+ whitespace, keep single interior spaces. Turns e.g.
+// " SOC Voltage     : 0    mV" into "SOC Voltage: 0mV".
+static std::string collapse_whitespace(const std::string &in) {
+  std::string out;
+  out.reserve(in.size());
+  size_t i = 0, n = in.size();
+  while (i < n) {
+    if (isspace((unsigned char) in[i])) {
+      size_t j = i;
+      while (j < n && isspace((unsigned char) in[j]))
+        j++;
+      // Keep a single space only for an interior run of exactly one space.
+      if ((j - i) == 1 && !out.empty() && j < n)
+        out += ' ';
+      i = j;
+    } else {
+      out += in[i++];
+    }
+  }
+  return out;
+}
 
 PytesEBoxComponent::PytesEBoxComponent() {}
 
@@ -301,13 +324,13 @@ void PytesEBoxComponent::loop() {
   if (this->state_ == STATE_POLL_DECODED) {
     if (this->buffer_index_read_ != this->buffer_index_write_) {
       switch (_last_cmd) {
-        case CMD_PWR_INDEX:
-        case CMD_PWRSYS: {
-          this->buffer_[buffer_index_read_] = std::regex_replace(this->buffer_[buffer_index_read_], pattern, "");
+        case CMD_PWR_INDEX: {
+          this->buffer_[buffer_index_read_] = collapse_whitespace(this->buffer_[buffer_index_read_]);
           break;
           }
         case CMD_PWR:
         case CMD_BAT_INDEX:
+        case CMD_PWRSYS:  // parsed from the raw line (see processData_pwrsysLine), no trim
         case CMD_BAT: { this->state_ = STATE_COMMAND; ESP_LOGVV(TAG, "Command Complete, switch to STATE_COMMAND"); return; }
         case CMD_NIL:
         case CMD_ERROR:
@@ -558,56 +581,38 @@ pwr_data_l.bat_num = bat_num;
 }
 
 void PytesEBoxComponent::processData_pwrsysLine(std::string &buffer) {
-  // Lines arrive whitespace-trimmed to "Key: ValueUnit" (see STATE_POLL_DECODED).
-  // The colon in each prefix disambiguates e.g. "Highest voltage:" from the
-  // separate "Highest voltage num:" line.
-  if (buffer.rfind("System Volt:", 0) == 0) {
-    sscanf(buffer.c_str(), "System Volt: %u", &pwrsys_l.sys_voltage);
-    ESP_LOGV(TAG, "%s -> %u", buffer.c_str(), pwrsys_l.sys_voltage);
-  }
-  if (buffer.rfind("System Curr:", 0) == 0) {
-    sscanf(buffer.c_str(), "System Curr: %d", &pwrsys_l.sys_current);
-    ESP_LOGV(TAG, "%s -> %d", buffer.c_str(), pwrsys_l.sys_current);
-  }
-  if (buffer.rfind("System RC:", 0) == 0) {
-    sscanf(buffer.c_str(), "System RC: %u", &pwrsys_l.sys_rc);
-    ESP_LOGV(TAG, "%s -> %u", buffer.c_str(), pwrsys_l.sys_rc);
-  }
-  if (buffer.rfind("System FCC:", 0) == 0) {
-    sscanf(buffer.c_str(), "System FCC: %u", &pwrsys_l.sys_fcc);
-    ESP_LOGV(TAG, "%s -> %u", buffer.c_str(), pwrsys_l.sys_fcc);
-  }
-  if (buffer.rfind("System SOC:", 0) == 0) {
-    sscanf(buffer.c_str(), "System SOC: %u", &pwrsys_l.sys_soc);
-    ESP_LOGV(TAG, "%s -> %u", buffer.c_str(), pwrsys_l.sys_soc);
-  }
-  if (buffer.rfind("System SOH:", 0) == 0) {
-    sscanf(buffer.c_str(), "System SOH: %u", &pwrsys_l.sys_soh);
-    ESP_LOGV(TAG, "%s -> %u", buffer.c_str(), pwrsys_l.sys_soh);
-  }
-  if (buffer.rfind("Total Power In:", 0) == 0) {
-    sscanf(buffer.c_str(), "Total Power In: %u", &pwrsys_l.total_power_in);
-    ESP_LOGV(TAG, "%s -> %u", buffer.c_str(), pwrsys_l.total_power_in);
-  }
-  if (buffer.rfind("Total Power Out:", 0) == 0) {
-    sscanf(buffer.c_str(), "Total Power Out: %u", &pwrsys_l.total_power_out);
-    ESP_LOGV(TAG, "%s -> %u", buffer.c_str(), pwrsys_l.total_power_out);
-  }
-  if (buffer.rfind("Highest voltage:", 0) == 0) {
-    sscanf(buffer.c_str(), "Highest voltage: %u", &pwrsys_l.cell_volt_high);
-    ESP_LOGV(TAG, "%s -> %u", buffer.c_str(), pwrsys_l.cell_volt_high);
-  }
-  if (buffer.rfind("Lowest voltage:", 0) == 0) {
-    sscanf(buffer.c_str(), "Lowest voltage: %u", &pwrsys_l.cell_volt_low);
-    ESP_LOGV(TAG, "%s -> %u", buffer.c_str(), pwrsys_l.cell_volt_low);
-  }
-  if (buffer.rfind("Highest temperature:", 0) == 0) {
-    sscanf(buffer.c_str(), "Highest temperature: %d", &pwrsys_l.cell_temp_high);
-    ESP_LOGV(TAG, "%s -> %d", buffer.c_str(), pwrsys_l.cell_temp_high);
-  }
-  if (buffer.rfind("Lowest temperature:", 0) == 0) {
-    sscanf(buffer.c_str(), "Lowest temperature: %d", &pwrsys_l.cell_temp_low);
-    ESP_LOGV(TAG, "%s -> %d", buffer.c_str(), pwrsys_l.cell_temp_low);
+  // Parsed from the RAW line (e.g. " System Volt              : 53593    mV").
+  // The whitespace in each format string absorbs the padded key/colon, and
+  // %u/%d stops at the space before the unit -- so numeric-prefixed units like
+  // "100WH" can't contaminate the value (the earlier whitespace-collapse glued
+  // "1216     100WH" into "1216100"). A == 1 return means the key matched on
+  // this line, which also disambiguates e.g. "Highest voltage" from the
+  // separate "Highest voltage num" line.
+  const char *b = buffer.c_str();
+  if (sscanf(b, " System Volt : %u", &pwrsys_l.sys_voltage) == 1) {
+    ESP_LOGV(TAG, "%s -> %u", b, pwrsys_l.sys_voltage);
+  } else if (sscanf(b, " System Curr : %d", &pwrsys_l.sys_current) == 1) {
+    ESP_LOGV(TAG, "%s -> %d", b, pwrsys_l.sys_current);
+  } else if (sscanf(b, " System RC : %u", &pwrsys_l.sys_rc) == 1) {
+    ESP_LOGV(TAG, "%s -> %u", b, pwrsys_l.sys_rc);
+  } else if (sscanf(b, " System FCC : %u", &pwrsys_l.sys_fcc) == 1) {
+    ESP_LOGV(TAG, "%s -> %u", b, pwrsys_l.sys_fcc);
+  } else if (sscanf(b, " System SOC : %u", &pwrsys_l.sys_soc) == 1) {
+    ESP_LOGV(TAG, "%s -> %u", b, pwrsys_l.sys_soc);
+  } else if (sscanf(b, " System SOH : %u", &pwrsys_l.sys_soh) == 1) {
+    ESP_LOGV(TAG, "%s -> %u", b, pwrsys_l.sys_soh);
+  } else if (sscanf(b, " Total Power In : %u", &pwrsys_l.total_power_in) == 1) {
+    ESP_LOGV(TAG, "%s -> %u", b, pwrsys_l.total_power_in);
+  } else if (sscanf(b, " Total Power Out : %u", &pwrsys_l.total_power_out) == 1) {
+    ESP_LOGV(TAG, "%s -> %u", b, pwrsys_l.total_power_out);
+  } else if (sscanf(b, " Highest voltage : %u", &pwrsys_l.cell_volt_high) == 1) {
+    ESP_LOGV(TAG, "%s -> %u", b, pwrsys_l.cell_volt_high);
+  } else if (sscanf(b, " Lowest voltage : %u", &pwrsys_l.cell_volt_low) == 1) {
+    ESP_LOGV(TAG, "%s -> %u", b, pwrsys_l.cell_volt_low);
+  } else if (sscanf(b, " Highest temperature : %d", &pwrsys_l.cell_temp_high) == 1) {
+    ESP_LOGV(TAG, "%s -> %d", b, pwrsys_l.cell_temp_high);
+  } else if (sscanf(b, " Lowest temperature : %d", &pwrsys_l.cell_temp_low) == 1) {
+    ESP_LOGV(TAG, "%s -> %d", b, pwrsys_l.cell_temp_low);
   }
 }
 
