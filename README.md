@@ -36,6 +36,33 @@ Once configured, you can use sensors as described below for your projects.
 <img width="1143" height="759" alt="image" src="https://github.com/user-attachments/assets/788da967-e44e-4f99-b5d9-3b149abf1617" />
 
 
+What's new in this branch (`dev`)
+---------------------------------
+
+This fork adds support for the **Pytes LV1** stack (`E-BOX-48100S-S` battery
+modules behind an `E-BOX-48100S-M` master, 16S) and richer system-level data,
+plus a round of stability fixes:
+
+- **LV1 (E-BOX-48100S) support** — the console output of the LV1 differs slightly
+  from the older E-BOX models; command parsing was adapted to match.
+- **Automatic debug-mode login** — the component now sends `login debug` once at
+  startup so the richer console commands (e.g. `pwrsys`) are available. The
+  E-BOX stays in debug mode for the session.
+- **New system-level (`pwrsys`) sensors** — system voltage/current, SOC, SOH,
+  remaining & full-charge capacity, total energy in/out, and the highest/lowest
+  cell voltage & temperature across the whole stack. See the new `system_*` /
+  `cell_*_high` / `cell_*_low` options under [Sensor](#sensor).
+- **Multiple stacks on one ESP** — two (or more) `pytes_e_box` instances on
+  separate UARTs now run with fully independent state, so each stack reports
+  reliably (previously they shared internal state and clobbered each other).
+- **Stability fixes** — removed `std::regex` (which faults on the ESP32-C6),
+  bounded all `sscanf` string conversions, and fixed a logging format-string
+  bug. These eliminated the `Load access fault` reboots and the intermittent
+  data drop-outs.
+
+> Tested on an ESP32-C6 driving two 5-battery LV1 stacks. Other E-BOX models
+> should continue to work as before.
+
 Instructions for setting up Pytes E-Box in ESPHome.
 
 Hardware Setup
@@ -65,6 +92,7 @@ Tested devcies:
 | --- | --- |
 | Pytes | E-BOX-48100R-C |
 | Pytes | E-BOX-48100V-D (V5) |
+| Pytes | E-BOX-48100S-M / -S (LV1, 16S) |
 
 Component/Hub
 -------------
@@ -124,6 +152,24 @@ Configuration variables:
 - **total_power_out** (*Optional*): -- All options from [Sensor](https://esphome.io/components/sensor/#config-sensor).
 - **work_status** (*Optional*): -- All options from [Sensor](https://esphome.io/components/sensor/#config-sensor).
 - **cell_count** (*Optional*): -- All options from [Sensor](https://esphome.io/components/sensor/#config-sensor).
+
+System-level values (from the debug `pwrsys` command). These describe the **whole
+E-BOX stack**, not a single battery, so add them to just **one** `battery:`
+instance per stack (e.g. `battery: 1`) rather than to every battery. They require
+the master battery's console.
+
+- **system_voltage** (*Optional*): Stack pack voltage, in V. All options from [Sensor](https://esphome.io/components/sensor/#config-sensor).
+- **system_current** (*Optional*): Stack current, in A. Negative when discharging. All options from [Sensor](https://esphome.io/components/sensor/#config-sensor).
+- **system_soc** (*Optional*): Stack state of charge, in %. All options from [Sensor](https://esphome.io/components/sensor/#config-sensor).
+- **system_soh** (*Optional*): Stack state of health, in %. All options from [Sensor](https://esphome.io/components/sensor/#config-sensor).
+- **system_rc** (*Optional*): Remaining capacity, in Ah. All options from [Sensor](https://esphome.io/components/sensor/#config-sensor).
+- **system_fcc** (*Optional*): Full-charge capacity, in Ah. All options from [Sensor](https://esphome.io/components/sensor/#config-sensor).
+- **system_power_in** (*Optional*): Total energy charged into the stack, in kWh. All options from [Sensor](https://esphome.io/components/sensor/#config-sensor).
+- **system_power_out** (*Optional*): Total energy discharged from the stack, in kWh. All options from [Sensor](https://esphome.io/components/sensor/#config-sensor).
+- **cell_voltage_high** (*Optional*): Highest cell voltage across the stack, in V. All options from [Sensor](https://esphome.io/components/sensor/#config-sensor).
+- **cell_voltage_low** (*Optional*): Lowest cell voltage across the stack, in V. All options from [Sensor](https://esphome.io/components/sensor/#config-sensor).
+- **cell_temp_high** (*Optional*): Highest cell temperature across the stack, in °C. All options from [Sensor](https://esphome.io/components/sensor/#config-sensor).
+- **cell_temp_low** (*Optional*): Lowest cell temperature across the stack, in °C. All options from [Sensor](https://esphome.io/components/sensor/#config-sensor).
 
 - **cells** (*Optional*): Dictionary of Battery cells.
   - **cell** (***Required***): Which battery cell to monitor. 0 to 15. 
