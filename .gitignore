@@ -1,0 +1,3 @@
+.env
+examples/esp32c6-pyteslv1.yaml
+debugging_logs/esp32c6-pyteslv1-logs.txt
