@@ -7,17 +7,10 @@
 namespace esphome {
 namespace pytes_e_box {
 
-static const int MAX_DATA_LENGTH_BYTES = 4096;
-static const int MAX_DATA_LINE_LENGTH = 256;
 static const uint8_t ASCII_LF = 0x0A;
 static const uint8_t ASCII_CR = 0x0D;
-ENUMCommand _cmd_result = CMD_PWR;
-ENUMCommand _last_cmd = CMD_NIL;
-int pwrcount = 0;
-int recv = 0;
-int jobCount = 0;
-int __run_ = 0;
-bool praseData = false;
+// _last_cmd is now a per-instance class member (was a shared global that two
+// component instances clobbered). MAX_DATA_LINE_LENGTH moved to the header.
 
 // Replacement for the former std::regex_replace(buffer, "(^\\s|\\s{2,})", "").
 // std::regex faults the stack on the ESP32-C6 (Load access fault crash), so this
@@ -383,10 +376,11 @@ void PytesEBoxComponent::loop() {
       return;
       }
     while (this->available()) {
-      static char buffer[MAX_DATA_LINE_LENGTH];
-      if(readline(read(), buffer, MAX_DATA_LENGTH_BYTES) > 0) {
-        this->buffer_[buffer_index_write_] = buffer;
-        ESP_LOGV(TAG, "(%d) %s",this->buffer_index_write_, buffer);
+      // line_buffer_ is a per-instance member; pass its real size (256) as the
+      // cap, not MAX_DATA_LENGTH_BYTES (4096) which could overflow it.
+      if(readline(read(), this->line_buffer_, MAX_DATA_LINE_LENGTH) > 0) {
+        this->buffer_[buffer_index_write_] = this->line_buffer_;
+        ESP_LOGV(TAG, "(%d) %s",this->buffer_index_write_, this->line_buffer_);
       if (this->isLineComplete(this->buffer_[buffer_index_write_]) > 0) {
           this->state_ = STATE_POLL_COMPLETE;
           //ESP_LOGVV(TAG, "Data Complete");

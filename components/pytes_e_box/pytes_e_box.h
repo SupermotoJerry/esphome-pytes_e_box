@@ -8,7 +8,8 @@
 namespace esphome {
 namespace pytes_e_box {
 static const char *const TAG = "pytes_e_box";
-static const uint8_t NUM_BUFFERS = 128; 
+static const uint8_t NUM_BUFFERS = 128;
+static const int MAX_DATA_LINE_LENGTH = 256;
 static const uint8_t TEXT_SENSOR_MIN_LEN = 8;
 static const uint8_t TEXT_SENSOR_BIG_LEN = 18;
 static const uint8_t TEXT_SENSOR_MAX_LEN = 60;
@@ -150,26 +151,28 @@ public:
   void set_polling_timeout(uint32_t poll_timeout) { this->polling_timeout_ = poll_timeout; }
   void set_system_battery_count(int8_t num_bats) { this->battaries_in_system_ = num_bats; }
   int readline(int readch, char *buffer, int len) {
-  static int pos = 0;
+  // readline_pos_ is a per-instance member (was a function-local static, which
+  // two component instances would clobber, corrupting each other's line
+  // assembly).
   int rpos;
   if (readch > 0) {
     switch (readch) {
       case '\n': // Ignore new-lines
         break;
       case '\r': // Return on CR
-        rpos = pos;
-        pos = 0;  // Reset position index ready for next time
+        rpos = this->readline_pos_;
+        this->readline_pos_ = 0;  // Reset position index ready for next time
         return rpos;
       default:
-        if (pos < len-1) {
-          buffer[pos++] = readch;
-          buffer[pos] = 0;
+        if (this->readline_pos_ < len-1) {
+          buffer[this->readline_pos_++] = readch;
+          buffer[this->readline_pos_] = 0;
         }
     }
   }
   // No end of line has been found, so return -1.
   return -1;
-  }  
+  }
 
   std::vector<std::string> splitData(std::string s){
     std::vector<std::string> res;
@@ -194,6 +197,14 @@ protected:
   std::string buffer_[NUM_BUFFERS];
   int buffer_index_write_ = 0;
   int buffer_index_read_ = 0;
+
+  // Per-instance command/line-assembly state. These were a file-scope global
+  // (_last_cmd) and function-local statics (readline pos, STATE_POLL line
+  // buffer); with two component instances sharing them, the instances clobbered
+  // each other's parsing — only one stack's data would publish at a time.
+  ENUMCommand _last_cmd = CMD_NIL;
+  int readline_pos_ = 0;
+  char line_buffer_[MAX_DATA_LINE_LENGTH] = {};
 
 
   uint8_t state_ = 254;
