@@ -215,8 +215,8 @@ void PytesEBoxComponent::loop() {
       }
       */
       const char *command = this->cmd_queue_[this->command_queue_position_].command.c_str();
-      ESP_LOGE(TAG, "Timeout on command '%s': retry %d, elapsed %lu ms. UART Buffer: %s",
-           this->cmd_queue_[this->command_queue_position_].command.c_str(),
+      ESP_LOGE(TAG, "Timeout on command '%s': retry %u, elapsed %lu ms",
+           command,
            this->command_retries_,
            elapsed);
            
@@ -437,7 +437,7 @@ void PytesEBoxComponent::processData_pwrLine(std::string &buffer) {
   if (isdigit(buffer[0]) && (buffer.find("Absent") == -1)) {
   PytesEBoxListener::pwr_LineContents l{};
   const int parsed = sscanf(                                                                                      // NOLINT
-    buffer.c_str(),"%d %d %d %d %d %d %d %d %7s %7s %7s %7s %d%% %d-%d-%d %d:%d:%d %s %s %s %s",                  // NOLINT
+    buffer.c_str(),"%d %d %d %d %d %d %d %d %7s %7s %7s %7s %d%% %d-%d-%d %d:%d:%d %7s %7s %59s %59s",            // NOLINT
     &l.bat_num, &l.voltage, &l.current, &l.temperature, &l.tlow, &l.thigh, &l.vlow, &l.vhigh,                     // NOLINT
     l.base_st, l.volt_st, l.curr_st, l.temp_st, &l.coulomb, &l.year, &l.month, &l.day, &l.hour,                   // NOLINT
     &l.min, &l.sec, l.bv_st, l.bt_st,l.serial_st ,l.devtype_st);                                                  // NOLINT
@@ -510,68 +510,68 @@ pwr_data_l.bat_num = bat_num;
   }
 
   if (this->buffer_[this->buffer_index_read_].rfind("Barcode:", 0) == 0) {
-    sscanf(this->buffer_[this->buffer_index_read_].c_str()," Barcode: %[^\n]",pwr_data_l.Barcode);
+    sscanf(this->buffer_[this->buffer_index_read_].c_str()," Barcode: %17[^\n]",pwr_data_l.Barcode);
     ESP_LOGV(TAG,"%s -> %s",this->buffer_[this->buffer_index_read_].c_str(),pwr_data_l.Barcode);
   }
 
 
   if (this->buffer_[this->buffer_index_read_].rfind("Firm Version:", 0) == 0) {
-    sscanf(this->buffer_[this->buffer_index_read_].c_str(),"Firm Version: %[^\n\r]",pwr_data_l.FirmVersion); 
+    sscanf(this->buffer_[this->buffer_index_read_].c_str(),"Firm Version: %59[^\n\r]",pwr_data_l.FirmVersion);
     ESP_LOGV(TAG,"%s -> %s",this->buffer_[this->buffer_index_read_].c_str(),pwr_data_l.FirmVersion);
 
   }
 
   if (this->buffer_[this->buffer_index_read_].rfind("Coul. Status:", 0) == 0) {
-    sscanf(this->buffer_[this->buffer_index_read_].c_str(),"Coul. Status: %[^\n]",pwr_data_l.CoulStatus);
+    sscanf(this->buffer_[this->buffer_index_read_].c_str(),"Coul. Status: %17[^\n]",pwr_data_l.CoulStatus);
     ESP_LOGV(TAG,"%s -> %s",this->buffer_[this->buffer_index_read_].c_str(),pwr_data_l.CoulStatus);
   }
 
   if (this->buffer_[this->buffer_index_read_].rfind("Bat Status:", 0) == 0) {
-    sscanf(this->buffer_[this->buffer_index_read_].c_str(),"Bat Status: %[^\n]",pwr_data_l.BatStatus);
+    sscanf(this->buffer_[this->buffer_index_read_].c_str(),"Bat Status: %17[^\n]",pwr_data_l.BatStatus);
     ESP_LOGV(TAG,"%s -> %s",this->buffer_[this->buffer_index_read_].c_str(),pwr_data_l.BatStatus);
   }
 
   
   if (this->buffer_[this->buffer_index_read_].rfind("CMOS Status:", 0) == 0) {
-    sscanf(this->buffer_[this->buffer_index_read_].c_str()," CMOS Status: %[^\n]",pwr_data_l.CMOSStatus);
+    sscanf(this->buffer_[this->buffer_index_read_].c_str()," CMOS Status: %17[^\n]",pwr_data_l.CMOSStatus);
     ESP_LOGV(TAG,"%s -> %s",this->buffer_[this->buffer_index_read_].c_str(),pwr_data_l.CMOSStatus);
 
   }
 
   if (this->buffer_[this->buffer_index_read_].rfind("DMOS Status:", 0) == 0) {
-    sscanf(this->buffer_[this->buffer_index_read_].c_str()," DMOS Status: %[^\n]",pwr_data_l.DMOSStatus);
+    sscanf(this->buffer_[this->buffer_index_read_].c_str()," DMOS Status: %17[^\n]",pwr_data_l.DMOSStatus);
     ESP_LOGV(TAG,"%s -> %s",this->buffer_[this->buffer_index_read_].c_str(),pwr_data_l.DMOSStatus);
   }
 
   
   if (this->buffer_[this->buffer_index_read_].rfind("Bat Protect ENA :", 0) == 0) {
-    sscanf(this->buffer_[this->buffer_index_read_].c_str()," Bat Protect ENA : %[^\n]",pwr_data_l.BatProtectENA);
+    sscanf(this->buffer_[this->buffer_index_read_].c_str()," Bat Protect ENA : %59[^\n]",pwr_data_l.BatProtectENA);
     ESP_LOGV(TAG,"%s -> %s",this->buffer_[this->buffer_index_read_].c_str(),pwr_data_l.BatProtectENA);
   }
     
   if (this->buffer_[this->buffer_index_read_].rfind("Pwr Protect ENA :", 0) == 0) {
-    sscanf(this->buffer_[this->buffer_index_read_].c_str()," Pwr Protect ENA : %[^\n]",pwr_data_l.PwrProtectENA);
+    sscanf(this->buffer_[this->buffer_index_read_].c_str()," Pwr Protect ENA : %59[^\n]",pwr_data_l.PwrProtectENA);
     ESP_LOGV(TAG,"%s -> %s",this->buffer_[this->buffer_index_read_].c_str(),pwr_data_l.PwrProtectENA);
   }
     
   if (this->buffer_[this->buffer_index_read_].rfind("Bat Events:", 0) == 0) {
-    sscanf(this->buffer_[this->buffer_index_read_].c_str()," Bat Events: %[^\n]",pwr_data_l.BatEvents);
+    sscanf(this->buffer_[this->buffer_index_read_].c_str()," Bat Events: %7[^\n]",pwr_data_l.BatEvents);
     ESP_LOGV(TAG,"%s -> %s",this->buffer_[this->buffer_index_read_].c_str(),pwr_data_l.BatEvents);
 
   }
 
   if (this->buffer_[this->buffer_index_read_].rfind("Power Events:", 0) == 0) {
-    sscanf(this->buffer_[this->buffer_index_read_].c_str()," Power Events: %[^\n]",pwr_data_l.PowerEvents);
+    sscanf(this->buffer_[this->buffer_index_read_].c_str()," Power Events: %7[^\n]",pwr_data_l.PowerEvents);
     ESP_LOGV(TAG,"%s -> %s",this->buffer_[this->buffer_index_read_].c_str(),pwr_data_l.PowerEvents);
   }
 
   if (this->buffer_[this->buffer_index_read_].rfind("System Fault:", 0) == 0) {
-    sscanf(this->buffer_[this->buffer_index_read_].c_str()," System Fault: %[^\n]",pwr_data_l.SystemFault);
+    sscanf(this->buffer_[this->buffer_index_read_].c_str()," System Fault: %7[^\n]",pwr_data_l.SystemFault);
     ESP_LOGV(TAG,"%s -> %s",this->buffer_[this->buffer_index_read_].c_str(),pwr_data_l.SystemFault);
   }
 
   if (this->buffer_[this->buffer_index_read_].rfind("DevType:", 0) == 0) {
-    sscanf(this->buffer_[this->buffer_index_read_].c_str()," DevType: %[^\n]",pwr_data_l.DevType);
+    sscanf(this->buffer_[this->buffer_index_read_].c_str()," DevType: %17[^\n]",pwr_data_l.DevType);
     ESP_LOGV(TAG,"%s -> %s",this->buffer_[this->buffer_index_read_].c_str(),pwr_data_l.DevType);
   }
 
