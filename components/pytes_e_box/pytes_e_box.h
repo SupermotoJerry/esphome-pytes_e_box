@@ -42,7 +42,7 @@ public:
         bv_st[TEXT_SENSOR_MIN_LEN], bt_st[TEXT_SENSOR_MIN_LEN];
   };
   struct bat_index_LineContents {
-    uint32_t cell_volt,cell_tempr, cell_coulomb;
+    uint32_t cell_volt,cell_tempr, cell_coulomb, cell_coulomb_mah;
     int cell_curr, bat_num = 0, cell_num = 0;
     char cell_baseState[TEXT_SENSOR_MAX_LEN], cell_voltState[TEXT_SENSOR_MAX_LEN], cell_currState[TEXT_SENSOR_MAX_LEN], 
           cell_tempState[TEXT_SENSOR_MAX_LEN];
@@ -77,14 +77,19 @@ public:
   float get_setup_priority() const override;
 
   ENUMCommand readCommand(std::string &buffer) {
-  char cmd_[4];
+  char cmd_[16] = {0};
   int no_ = -1;
-  const int parsed = sscanf(buffer.c_str(),"PYTES>%s %d",cmd_,&no_);
-  if (parsed <= 0) {
-    if (sscanf(buffer.c_str(),"%s %d",cmd_,&no_) <= 0) {
-    ESP_LOGE(TAG, "Line dont have 'Pytes>' tag: %s",buffer.c_str());
+  // The echoed command line is prefixed by the console prompt, which differs by
+  // login mode: "PYTES>", "PYTES_debug>", "PYTES_config>". Parse the command
+  // that follows the last '>' so every prompt variant works. Widths are bounded
+  // to avoid overflowing cmd_ (the previous 4-byte buffer + unbounded %s caused
+  // a stack-smash / Load access fault reboot on the debug prompt).
+  size_t prompt_end = buffer.rfind('>');
+  const char *cmd_start =
+      (prompt_end == std::string::npos) ? buffer.c_str() : buffer.c_str() + prompt_end + 1;
+  if (sscanf(cmd_start, "%15s %d", cmd_, &no_) <= 0) {
+    ESP_LOGE(TAG, "No command found in line: %s", buffer.c_str());
     return CMD_ERROR;
-    }
   }
   std::string command = cmd_;
   if ((command == "pwr") && (no_ == -1)) { return CMD_PWR; }

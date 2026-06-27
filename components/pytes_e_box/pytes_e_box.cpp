@@ -368,12 +368,12 @@ void PytesEBoxComponent::processData_batIndexLine(std::string &buffer, int bat_n
 //      &l.cell_num, &l.cell_volt, &l.cell_tempr, l.cell_baseState, l.cell_voltState,                             // NOLINT
 //      l.cell_currState, l.cell_tempState, &l.cell_coulomb, &l.cell_curr);                                       // NOLINT
     const int parsed = sscanf(                                                                                 // NOLINT
-      buffer.c_str(),"%d %d %d %d %7s %7s %7s %7s %d%% %d",                                                    // NOLINT    
-      &l.cell_num, &l.cell_volt, &l.cell_curr, &l.cell_tempr, l.cell_baseState, l.cell_voltState,              // NOLINT               
-      l.cell_currState, l.cell_tempState, &l.cell_coulomb);                                                    // NOLINT
-    
-    if (parsed != 9) {
-      ESP_LOGE(TAG, "invalid line: found only %d, should be 9 items. in line %d\n: %s",
+      buffer.c_str(),"%d %d %d %d %7s %7s %7s %7s %d%% %d",                                                    // NOLINT
+      &l.cell_num, &l.cell_volt, &l.cell_curr, &l.cell_tempr, l.cell_baseState, l.cell_voltState,              // NOLINT
+      l.cell_currState, l.cell_tempState, &l.cell_coulomb, &l.cell_coulomb_mah);                               // NOLINT
+
+    if (parsed != 10) {
+      ESP_LOGE(TAG, "invalid line: found only %d, should be 10 items. in line %d\n: %s",
                     parsed, l.cell_num, buffer.substr(0, buffer.size() - 2).c_str());
       return;
     }
@@ -399,7 +399,7 @@ void PytesEBoxComponent::processData_pwrLine(std::string &buffer) {
   const int parsed = sscanf(                                                                                      // NOLINT
     buffer.c_str(),"%d %d %d %d %d %d %d %d %7s %7s %7s %7s %d%% %d-%d-%d %d:%d:%d %s %s %s %s",                  // NOLINT
     &l.bat_num, &l.voltage, &l.current, &l.temperature, &l.tlow, &l.thigh, &l.vlow, &l.vhigh,                     // NOLINT
-    l.base_st, l.volt_st, l.curr_st, l.temp_st, &l.coulomb, &l.day, &l.month, &l.year, &l.hour,                   // NOLINT
+    l.base_st, l.volt_st, l.curr_st, l.temp_st, &l.coulomb, &l.year, &l.month, &l.day, &l.hour,                   // NOLINT
     &l.min, &l.sec, l.bv_st, l.bt_st,l.serial_st ,l.devtype_st);                                                  // NOLINT
 
     std::string line = std::string("  Buffer: ") + buffer;
