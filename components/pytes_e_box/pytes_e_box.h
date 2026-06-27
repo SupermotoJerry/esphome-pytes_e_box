@@ -21,6 +21,7 @@ enum ENUMCommand {
   CMD_PWR_INDEX = 2,
   CMD_BAT = 3,
   CMD_BAT_INDEX = 4,
+  CMD_PWRSYS = 5,
 };
 
 
@@ -58,11 +59,21 @@ public:
         SystemFault[TEXT_SENSOR_MIN_LEN], Barcode[TEXT_SENSOR_BIG_LEN], DevType[TEXT_SENSOR_BIG_LEN];
   };  
 
+  // System-wide data from the debug-mode "pwrsys" command (one block per E-BOX
+  // stack, not per battery index).
+  struct pwrsys_LineContents {
+    uint32_t sys_voltage = 0, sys_rc = 0, sys_fcc = 0, sys_soc = 0, sys_soh = 0,
+        total_power_in = 0, total_power_out = 0, cell_volt_high = 0, cell_volt_low = 0;
+    int sys_current = 0, cell_temp_high = 0, cell_temp_low = 0;
+  };
+
   virtual void on_pwr_line_read(pwr_LineContents *line);
   virtual void on_pwrn_line_read(pwr_data_LineContents *line);
   virtual void on_batn_line_read(bat_index_LineContents *line);
+  // Default no-op so listeners that don't care about system data need not override it.
+  virtual void on_pwrsys_line_read(pwrsys_LineContents *line) {}
   virtual void dump_config();
-  
+
 };
 
 class PytesEBoxComponent : public PollingComponent, public uart::UARTDevice {
@@ -92,6 +103,7 @@ public:
     return CMD_ERROR;
   }
   std::string command = cmd_;
+  if ((command == "pwrsys")) { return CMD_PWRSYS; }
   if ((command == "pwr") && (no_ == -1)) { return CMD_PWR; }
   if ((command == "pwr") && (no_ >= 1)) { return CMD_PWR_INDEX; }
   if ((command == "bat") && (no_ == -1)) { return CMD_BAT; }
@@ -115,6 +127,9 @@ public:
     }
     case CMD_BAT: {
       return "Battery Data";
+    }
+    case CMD_PWRSYS: {
+      return "Power System Data";
     }
     case CMD_ERROR: {
       return "ERROR?!";
@@ -198,6 +213,7 @@ protected:
   PytesEBoxListener::pwr_LineContents pwr_index_l{};
   PytesEBoxListener::bat_index_LineContents  bat_index_l{};
   PytesEBoxListener::pwr_data_LineContents pwr_data_l{};
+  PytesEBoxListener::pwrsys_LineContents pwrsys_l{};
   
   void add_polling_command_(const char *command, int _index, ENUMCommand polling_command);
   std::vector<PollingCommand> cmd_queue_{};
@@ -209,6 +225,7 @@ protected:
   void processData_pwrLine(std::string &buffer);
   void processData_batIndexLine(std::string &buffer, int bat_num);
   void processData_pwrIndex(std::string &buffer, int bat_num);
+  void processData_pwrsysLine(std::string &buffer);
   std::vector<PytesEBoxListener *> listeners_{};
   
 };

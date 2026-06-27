@@ -52,7 +52,14 @@ void PytesEBoxComponent::setup() {
   this->state_ = STATE_WAIT;
   this->clear_uart_buffer();
   this->last_poll_ = -1;
+  // The richer system-level commands (pwrsys) are only available in the
+  // console's debug mode. Logging in once is enough — the E-BOX stays in debug
+  // mode for the rest of the session. The response is discarded by the
+  // clear_uart_buffer() at the start of the first real poll.
+  this->write_str("login debug\n");
+  ESP_LOGI(TAG, "Sent 'login debug' to enter debug mode");
   this->add_polling_command_("pwr",0,CMD_PWR);
+  this->add_polling_command_("pwrsys",0,CMD_PWRSYS);
   std::string cmd;
   for (int i = 1; i <= this->battaries_in_system_; i++) {
     cmd = "pwr "+to_string(i);
@@ -131,6 +138,7 @@ uint8_t PytesEBoxComponent::send_next_command_() {
     this->pwr_index_l = {};
     this->bat_index_l = {};
     this->pwr_data_l = {};
+    this->pwrsys_l = {};
     this->write_str(this->cmd_queue_[this->command_queue_position_].command.c_str());
     this->write_str("\n");
     this->last_poll_ = millis();
@@ -232,6 +240,10 @@ void PytesEBoxComponent::loop() {
           listener->on_batn_line_read(&bat_index_l);
           break;
           }
+        case CMD_PWRSYS: {
+          listener->on_pwrsys_line_read(&pwrsys_l);
+          break;
+          }
         case CMD_BAT:
         case CMD_NIL:
         case CMD_ERROR:
@@ -264,6 +276,10 @@ void PytesEBoxComponent::loop() {
           this->cmd_queue_[this->command_queue_position_].index);
           break;
           }
+        case CMD_PWRSYS: {
+          this->processData_pwrsysLine(this->buffer_[this->buffer_index_read_]);
+          break;
+          }
         case CMD_BAT:
         case CMD_NIL:
         case CMD_ERROR:
@@ -285,7 +301,8 @@ void PytesEBoxComponent::loop() {
   if (this->state_ == STATE_POLL_DECODED) {
     if (this->buffer_index_read_ != this->buffer_index_write_) {
       switch (_last_cmd) {
-        case CMD_PWR_INDEX: {
+        case CMD_PWR_INDEX:
+        case CMD_PWRSYS: {
           this->buffer_[buffer_index_read_] = std::regex_replace(this->buffer_[buffer_index_read_], pattern, "");
           break;
           }
@@ -538,6 +555,60 @@ pwr_data_l.bat_num = bat_num;
   //ESP_LOGD(TAG,"%s",this->buffer_[this->buffer_index_read_].c_str());
 
 
+}
+
+void PytesEBoxComponent::processData_pwrsysLine(std::string &buffer) {
+  // Lines arrive whitespace-trimmed to "Key: ValueUnit" (see STATE_POLL_DECODED).
+  // The colon in each prefix disambiguates e.g. "Highest voltage:" from the
+  // separate "Highest voltage num:" line.
+  if (buffer.rfind("System Volt:", 0) == 0) {
+    sscanf(buffer.c_str(), "System Volt: %u", &pwrsys_l.sys_voltage);
+    ESP_LOGV(TAG, "%s -> %u", buffer.c_str(), pwrsys_l.sys_voltage);
+  }
+  if (buffer.rfind("System Curr:", 0) == 0) {
+    sscanf(buffer.c_str(), "System Curr: %d", &pwrsys_l.sys_current);
+    ESP_LOGV(TAG, "%s -> %d", buffer.c_str(), pwrsys_l.sys_current);
+  }
+  if (buffer.rfind("System RC:", 0) == 0) {
+    sscanf(buffer.c_str(), "System RC: %u", &pwrsys_l.sys_rc);
+    ESP_LOGV(TAG, "%s -> %u", buffer.c_str(), pwrsys_l.sys_rc);
+  }
+  if (buffer.rfind("System FCC:", 0) == 0) {
+    sscanf(buffer.c_str(), "System FCC: %u", &pwrsys_l.sys_fcc);
+    ESP_LOGV(TAG, "%s -> %u", buffer.c_str(), pwrsys_l.sys_fcc);
+  }
+  if (buffer.rfind("System SOC:", 0) == 0) {
+    sscanf(buffer.c_str(), "System SOC: %u", &pwrsys_l.sys_soc);
+    ESP_LOGV(TAG, "%s -> %u", buffer.c_str(), pwrsys_l.sys_soc);
+  }
+  if (buffer.rfind("System SOH:", 0) == 0) {
+    sscanf(buffer.c_str(), "System SOH: %u", &pwrsys_l.sys_soh);
+    ESP_LOGV(TAG, "%s -> %u", buffer.c_str(), pwrsys_l.sys_soh);
+  }
+  if (buffer.rfind("Total Power In:", 0) == 0) {
+    sscanf(buffer.c_str(), "Total Power In: %u", &pwrsys_l.total_power_in);
+    ESP_LOGV(TAG, "%s -> %u", buffer.c_str(), pwrsys_l.total_power_in);
+  }
+  if (buffer.rfind("Total Power Out:", 0) == 0) {
+    sscanf(buffer.c_str(), "Total Power Out: %u", &pwrsys_l.total_power_out);
+    ESP_LOGV(TAG, "%s -> %u", buffer.c_str(), pwrsys_l.total_power_out);
+  }
+  if (buffer.rfind("Highest voltage:", 0) == 0) {
+    sscanf(buffer.c_str(), "Highest voltage: %u", &pwrsys_l.cell_volt_high);
+    ESP_LOGV(TAG, "%s -> %u", buffer.c_str(), pwrsys_l.cell_volt_high);
+  }
+  if (buffer.rfind("Lowest voltage:", 0) == 0) {
+    sscanf(buffer.c_str(), "Lowest voltage: %u", &pwrsys_l.cell_volt_low);
+    ESP_LOGV(TAG, "%s -> %u", buffer.c_str(), pwrsys_l.cell_volt_low);
+  }
+  if (buffer.rfind("Highest temperature:", 0) == 0) {
+    sscanf(buffer.c_str(), "Highest temperature: %d", &pwrsys_l.cell_temp_high);
+    ESP_LOGV(TAG, "%s -> %d", buffer.c_str(), pwrsys_l.cell_temp_high);
+  }
+  if (buffer.rfind("Lowest temperature:", 0) == 0) {
+    sscanf(buffer.c_str(), "Lowest temperature: %d", &pwrsys_l.cell_temp_low);
+    ESP_LOGV(TAG, "%s -> %d", buffer.c_str(), pwrsys_l.cell_temp_low);
+  }
 }
 
 void PytesEBoxComponent::clear_uart_buffer() {
