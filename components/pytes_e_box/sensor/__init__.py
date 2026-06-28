@@ -12,12 +12,14 @@ from esphome.const import (
     UNIT_AMPERE,
     UNIT_CELSIUS,
     UNIT_PERCENT,
+    UNIT_KILOWATT_HOURS,
     STATE_CLASS_MEASUREMENT,
     DEVICE_CLASS_EMPTY,
     DEVICE_CLASS_VOLTAGE,
     DEVICE_CLASS_CURRENT,
     DEVICE_CLASS_TEMPERATURE,
-    DEVICE_CLASS_BATTERY
+    DEVICE_CLASS_BATTERY,
+    DEVICE_CLASS_ENERGY,
     )
 
 from .. import (pytes_e_box_ns ,CONF_PYTES_E_BOX_ID, PYTES_E_BOX_COMPONENT_SCHEMA, CONF_CELL, PytesEBoxBatteryCellSensor, PytesEBoxBatterySensor,
@@ -45,6 +47,20 @@ CONF_CELL_VOLTAGE       = "voltage"
 CONF_CELL_TEMPERATURE   = "temperature"
 CONF_CELL_COULOMB       = "coulomb"
 CONF_CELL_CURRENT       = "current"
+
+# System-wide values from the debug-mode "pwrsys" command (one E-BOX stack).
+CONF_SYSTEM_VOLTAGE     = "system_voltage"
+CONF_SYSTEM_CURRENT     = "system_current"
+CONF_SYSTEM_SOC         = "system_soc"
+CONF_SYSTEM_SOH         = "system_soh"
+CONF_SYSTEM_RC          = "system_rc"
+CONF_SYSTEM_FCC         = "system_fcc"
+CONF_SYSTEM_POWER_IN    = "system_power_in"
+CONF_SYSTEM_POWER_OUT   = "system_power_out"
+CONF_CELL_VOLTAGE_HIGH  = "cell_voltage_high"
+CONF_CELL_VOLTAGE_LOW   = "cell_voltage_low"
+CONF_CELL_TEMP_HIGH     = "cell_temp_high"
+CONF_CELL_TEMP_LOW      = "cell_temp_low"
 
 
 
@@ -148,7 +164,81 @@ BAT_TYPES: dict[str, cv.Schema] = {
         state_class=STATE_CLASS_MEASUREMENT,
         accuracy_decimals=3,
     ),
- 
+
+    # System-wide values from the "pwrsys" command.
+    CONF_SYSTEM_VOLTAGE: sensor.sensor_schema(
+        unit_of_measurement=UNIT_VOLT,
+        accuracy_decimals=3,
+        device_class=DEVICE_CLASS_VOLTAGE,
+        state_class=STATE_CLASS_MEASUREMENT,
+    ),
+    CONF_SYSTEM_CURRENT: sensor.sensor_schema(
+        unit_of_measurement=UNIT_AMPERE,
+        accuracy_decimals=3,
+        device_class=DEVICE_CLASS_CURRENT,
+        state_class=STATE_CLASS_MEASUREMENT,
+    ),
+    CONF_SYSTEM_SOC: sensor.sensor_schema(
+        unit_of_measurement=UNIT_PERCENT,
+        accuracy_decimals=0,
+        device_class=DEVICE_CLASS_BATTERY,
+        state_class=STATE_CLASS_MEASUREMENT,
+    ),
+    CONF_SYSTEM_SOH: sensor.sensor_schema(
+        unit_of_measurement=UNIT_PERCENT,
+        accuracy_decimals=0,
+        device_class=DEVICE_CLASS_EMPTY,
+        state_class=STATE_CLASS_MEASUREMENT,
+    ),
+    CONF_SYSTEM_RC: sensor.sensor_schema(
+        unit_of_measurement=UNIT_AMPERE_HOURS,
+        accuracy_decimals=3,
+        device_class=DEVICE_CLASS_EMPTY,
+        state_class=STATE_CLASS_MEASUREMENT,
+    ),
+    CONF_SYSTEM_FCC: sensor.sensor_schema(
+        unit_of_measurement=UNIT_AMPERE_HOURS,
+        accuracy_decimals=3,
+        device_class=DEVICE_CLASS_EMPTY,
+        state_class=STATE_CLASS_MEASUREMENT,
+    ),
+    CONF_SYSTEM_POWER_IN: sensor.sensor_schema(
+        unit_of_measurement=UNIT_KILOWATT_HOURS,
+        accuracy_decimals=1,
+        device_class=DEVICE_CLASS_ENERGY,
+        state_class=STATE_CLASS_MEASUREMENT,
+    ),
+    CONF_SYSTEM_POWER_OUT: sensor.sensor_schema(
+        unit_of_measurement=UNIT_KILOWATT_HOURS,
+        accuracy_decimals=1,
+        device_class=DEVICE_CLASS_ENERGY,
+        state_class=STATE_CLASS_MEASUREMENT,
+    ),
+    CONF_CELL_VOLTAGE_HIGH: sensor.sensor_schema(
+        unit_of_measurement=UNIT_VOLT,
+        accuracy_decimals=3,
+        device_class=DEVICE_CLASS_VOLTAGE,
+        state_class=STATE_CLASS_MEASUREMENT,
+    ),
+    CONF_CELL_VOLTAGE_LOW: sensor.sensor_schema(
+        unit_of_measurement=UNIT_VOLT,
+        accuracy_decimals=3,
+        device_class=DEVICE_CLASS_VOLTAGE,
+        state_class=STATE_CLASS_MEASUREMENT,
+    ),
+    CONF_CELL_TEMP_HIGH: sensor.sensor_schema(
+        unit_of_measurement=UNIT_CELSIUS,
+        accuracy_decimals=1,
+        device_class=DEVICE_CLASS_TEMPERATURE,
+        state_class=STATE_CLASS_MEASUREMENT,
+    ),
+    CONF_CELL_TEMP_LOW: sensor.sensor_schema(
+        unit_of_measurement=UNIT_CELSIUS,
+        accuracy_decimals=1,
+        device_class=DEVICE_CLASS_TEMPERATURE,
+        state_class=STATE_CLASS_MEASUREMENT,
+    ),
+
 }
 
 CELL_TYPES: dict[str, cv.Schema] = {

@@ -28,11 +28,26 @@ class PytesEBoxBatterySensor : public PytesEBoxListener, public Component {
 
   SUB_SENSOR(dev_datetime)
 
+  // System-wide values from the "pwrsys" command (one E-BOX stack).
+  SUB_SENSOR(system_voltage)
+  SUB_SENSOR(system_current)
+  SUB_SENSOR(system_soc)
+  SUB_SENSOR(system_soh)
+  SUB_SENSOR(system_rc)
+  SUB_SENSOR(system_fcc)
+  SUB_SENSOR(system_power_in)
+  SUB_SENSOR(system_power_out)
+  SUB_SENSOR(cell_voltage_high)
+  SUB_SENSOR(cell_voltage_low)
+  SUB_SENSOR(cell_temp_high)
+  SUB_SENSOR(cell_temp_low)
+
 
 
   virtual void on_pwr_line_read(pwr_LineContents *line);
   virtual void on_pwrn_line_read(pwr_data_LineContents *line);
   virtual void on_batn_line_read(bat_index_LineContents *line);
+  virtual void on_pwrsys_line_read(pwrsys_LineContents *line);
 
  protected:
   int bat_num_;  

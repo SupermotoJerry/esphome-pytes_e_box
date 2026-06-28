@@ -31,11 +31,68 @@ void PytesEBoxBatterySensor::dump_config() {
   LOG_SENSOR("  ", "Work Status", this->work_status_sensor_);
   LOG_SENSOR("  ", "Cell Count", this->cell_count_sensor_);
 
+  LOG_SENSOR("  ", "System Voltage", this->system_voltage_sensor_);
+  LOG_SENSOR("  ", "System Current", this->system_current_sensor_);
+  LOG_SENSOR("  ", "System SOC", this->system_soc_sensor_);
+  LOG_SENSOR("  ", "System SOH", this->system_soh_sensor_);
+  LOG_SENSOR("  ", "System RC", this->system_rc_sensor_);
+  LOG_SENSOR("  ", "System FCC", this->system_fcc_sensor_);
+  LOG_SENSOR("  ", "System Power In", this->system_power_in_sensor_);
+  LOG_SENSOR("  ", "System Power Out", this->system_power_out_sensor_);
+  LOG_SENSOR("  ", "Highest Cell Voltage", this->cell_voltage_high_sensor_);
+  LOG_SENSOR("  ", "Lowest Cell Voltage", this->cell_voltage_low_sensor_);
+  LOG_SENSOR("  ", "Highest Cell Temperature", this->cell_temp_high_sensor_);
+  LOG_SENSOR("  ", "Lowest Cell Temperature", this->cell_temp_low_sensor_);
+
 }
 
-void PytesEBoxBatterySensor::on_batn_line_read(bat_index_LineContents *line) { 
+void PytesEBoxBatterySensor::on_batn_line_read(bat_index_LineContents *line) {
   return;
 
+}
+
+void PytesEBoxBatterySensor::on_pwrsys_line_read(pwrsys_LineContents *line) {
+  // "pwrsys" is system-wide (one block per E-BOX stack), so there is no
+  // bat_num to match on. Only the battery instance the user configured with
+  // system_* sensors will have non-null pointers here, so unconfigured
+  // instances publish nothing.
+  if (this->system_voltage_sensor_ != nullptr) {
+    this->system_voltage_sensor_->publish_state(((float) line->sys_voltage) / 1000.0f);
+  }
+  if (this->system_current_sensor_ != nullptr) {
+    this->system_current_sensor_->publish_state(((float) line->sys_current) / 1000.0f);
+  }
+  if (this->system_soc_sensor_ != nullptr) {
+    this->system_soc_sensor_->publish_state(line->sys_soc);
+  }
+  if (this->system_soh_sensor_ != nullptr) {
+    this->system_soh_sensor_->publish_state(line->sys_soh);
+  }
+  if (this->system_rc_sensor_ != nullptr) {
+    this->system_rc_sensor_->publish_state(((float) line->sys_rc) / 1000.0f);
+  }
+  if (this->system_fcc_sensor_ != nullptr) {
+    this->system_fcc_sensor_->publish_state(((float) line->sys_fcc) / 1000.0f);
+  }
+  if (this->system_power_in_sensor_ != nullptr) {
+    // Reported in units of 100 Wh -> kWh.
+    this->system_power_in_sensor_->publish_state(((float) line->total_power_in) * 0.1f);
+  }
+  if (this->system_power_out_sensor_ != nullptr) {
+    this->system_power_out_sensor_->publish_state(((float) line->total_power_out) * 0.1f);
+  }
+  if (this->cell_voltage_high_sensor_ != nullptr) {
+    this->cell_voltage_high_sensor_->publish_state(((float) line->cell_volt_high) / 1000.0f);
+  }
+  if (this->cell_voltage_low_sensor_ != nullptr) {
+    this->cell_voltage_low_sensor_->publish_state(((float) line->cell_volt_low) / 1000.0f);
+  }
+  if (this->cell_temp_high_sensor_ != nullptr) {
+    this->cell_temp_high_sensor_->publish_state(((float) line->cell_temp_high) / 1000.0f);
+  }
+  if (this->cell_temp_low_sensor_ != nullptr) {
+    this->cell_temp_low_sensor_->publish_state(((float) line->cell_temp_low) / 1000.0f);
+  }
 }
 
 void PytesEBoxBatterySensor::on_pwrn_line_read(pwr_data_LineContents *line) { 

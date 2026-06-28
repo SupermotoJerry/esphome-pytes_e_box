@@ -3,23 +3,39 @@
 #include "esphome/core/helpers.h"
 #include <stdlib.h>
 #include <sstream>
-#include <regex>
 
 namespace esphome {
 namespace pytes_e_box {
 
-static const int MAX_DATA_LENGTH_BYTES = 4096;
-static const int MAX_DATA_LINE_LENGTH = 256;
 static const uint8_t ASCII_LF = 0x0A;
 static const uint8_t ASCII_CR = 0x0D;
-ENUMCommand _cmd_result = CMD_PWR;
-ENUMCommand _last_cmd = CMD_NIL;
-int pwrcount = 0;
-int recv = 0;
-int jobCount = 0;
-int __run_ = 0;
-bool praseData = false;
-std::regex pattern("(^\\s|\\s{2,})");
+// _last_cmd is now a per-instance class member (was a shared global that two
+// component instances clobbered). MAX_DATA_LINE_LENGTH moved to the header.
+
+// Replacement for the former std::regex_replace(buffer, "(^\\s|\\s{2,})", "").
+// std::regex faults the stack on the ESP32-C6 (Load access fault crash), so this
+// reproduces the same effect by hand: drop leading/trailing whitespace and any
+// run of 2+ whitespace, keep single interior spaces. Turns e.g.
+// " SOC Voltage     : 0    mV" into "SOC Voltage: 0mV".
+static std::string collapse_whitespace(const std::string &in) {
+  std::string out;
+  out.reserve(in.size());
+  size_t i = 0, n = in.size();
+  while (i < n) {
+    if (isspace((unsigned char) in[i])) {
+      size_t j = i;
+      while (j < n && isspace((unsigned char) in[j]))
+        j++;
+      // Keep a single space only for an interior run of exactly one space.
+      if ((j - i) == 1 && !out.empty() && j < n)
+        out += ' ';
+      i = j;
+    } else {
+      out += in[i++];
+    }
+  }
+  return out;
+}
 
 PytesEBoxComponent::PytesEBoxComponent() {}
 
@@ -52,7 +68,14 @@ void PytesEBoxComponent::setup() {
   this->state_ = STATE_WAIT;
   this->clear_uart_buffer();
   this->last_poll_ = -1;
+  // The richer system-level commands (pwrsys) are only available in the
+  // console's debug mode. Logging in once is enough — the E-BOX stays in debug
+  // mode for the rest of the session. The response is discarded by the
+  // clear_uart_buffer() at the start of the first real poll.
+  this->write_str("login debug\n");
+  ESP_LOGI(TAG, "Sent 'login debug' to enter debug mode");
   this->add_polling_command_("pwr",0,CMD_PWR);
+  this->add_polling_command_("pwrsys",0,CMD_PWRSYS);
   std::string cmd;
   for (int i = 1; i <= this->battaries_in_system_; i++) {
     cmd = "pwr "+to_string(i);
@@ -131,6 +154,7 @@ uint8_t PytesEBoxComponent::send_next_command_() {
     this->pwr_index_l = {};
     this->bat_index_l = {};
     this->pwr_data_l = {};
+    this->pwrsys_l = {};
     this->write_str(this->cmd_queue_[this->command_queue_position_].command.c_str());
     this->write_str("\n");
     this->last_poll_ = millis();
@@ -184,8 +208,8 @@ void PytesEBoxComponent::loop() {
       }
       */
       const char *command = this->cmd_queue_[this->command_queue_position_].command.c_str();
-      ESP_LOGE(TAG, "Timeout on command '%s': retry %d, elapsed %lu ms. UART Buffer: %s",
-           this->cmd_queue_[this->command_queue_position_].command.c_str(),
+      ESP_LOGE(TAG, "Timeout on command '%s': retry %u, elapsed %lu ms",
+           command,
            this->command_retries_,
            elapsed);
            
@@ -232,6 +256,10 @@ void PytesEBoxComponent::loop() {
           listener->on_batn_line_read(&bat_index_l);
           break;
           }
+        case CMD_PWRSYS: {
+          listener->on_pwrsys_line_read(&pwrsys_l);
+          break;
+          }
         case CMD_BAT:
         case CMD_NIL:
         case CMD_ERROR:
@@ -264,6 +292,10 @@ void PytesEBoxComponent::loop() {
           this->cmd_queue_[this->command_queue_position_].index);
           break;
           }
+        case CMD_PWRSYS: {
+          this->processData_pwrsysLine(this->buffer_[this->buffer_index_read_]);
+          break;
+          }
         case CMD_BAT:
         case CMD_NIL:
         case CMD_ERROR:
@@ -286,11 +318,12 @@ void PytesEBoxComponent::loop() {
     if (this->buffer_index_read_ != this->buffer_index_write_) {
       switch (_last_cmd) {
         case CMD_PWR_INDEX: {
-          this->buffer_[buffer_index_read_] = std::regex_replace(this->buffer_[buffer_index_read_], pattern, "");
+          this->buffer_[buffer_index_read_] = collapse_whitespace(this->buffer_[buffer_index_read_]);
           break;
           }
         case CMD_PWR:
         case CMD_BAT_INDEX:
+        case CMD_PWRSYS:  // parsed from the raw line (see processData_pwrsysLine), no trim
         case CMD_BAT: { this->state_ = STATE_COMMAND; ESP_LOGVV(TAG, "Command Complete, switch to STATE_COMMAND"); return; }
         case CMD_NIL:
         case CMD_ERROR:
@@ -343,10 +376,11 @@ void PytesEBoxComponent::loop() {
       return;
       }
     while (this->available()) {
-      static char buffer[MAX_DATA_LINE_LENGTH];
-      if(readline(read(), buffer, MAX_DATA_LENGTH_BYTES) > 0) {
-        this->buffer_[buffer_index_write_] = buffer;
-        ESP_LOGV(TAG, "(%d) %s",this->buffer_index_write_, buffer);
+      // line_buffer_ is a per-instance member; pass its real size (256) as the
+      // cap, not MAX_DATA_LENGTH_BYTES (4096) which could overflow it.
+      if(readline(read(), this->line_buffer_, MAX_DATA_LINE_LENGTH) > 0) {
+        this->buffer_[buffer_index_write_] = this->line_buffer_;
+        ESP_LOGV(TAG, "(%d) %s",this->buffer_index_write_, this->line_buffer_);
       if (this->isLineComplete(this->buffer_[buffer_index_write_]) > 0) {
           this->state_ = STATE_POLL_COMPLETE;
           //ESP_LOGVV(TAG, "Data Complete");
@@ -368,12 +402,12 @@ void PytesEBoxComponent::processData_batIndexLine(std::string &buffer, int bat_n
 //      &l.cell_num, &l.cell_volt, &l.cell_tempr, l.cell_baseState, l.cell_voltState,                             // NOLINT
 //      l.cell_currState, l.cell_tempState, &l.cell_coulomb, &l.cell_curr);                                       // NOLINT
     const int parsed = sscanf(                                                                                 // NOLINT
-      buffer.c_str(),"%d %d %d %d %7s %7s %7s %7s %d%% %d",                                                    // NOLINT    
-      &l.cell_num, &l.cell_volt, &l.cell_curr, &l.cell_tempr, l.cell_baseState, l.cell_voltState,              // NOLINT               
-      l.cell_currState, l.cell_tempState, &l.cell_coulomb);                                                    // NOLINT
-    
-    if (parsed != 9) {
-      ESP_LOGE(TAG, "invalid line: found only %d, should be 9 items. in line %d\n: %s",
+      buffer.c_str(),"%d %d %d %d %7s %7s %7s %7s %d%% %d",                                                    // NOLINT
+      &l.cell_num, &l.cell_volt, &l.cell_curr, &l.cell_tempr, l.cell_baseState, l.cell_voltState,              // NOLINT
+      l.cell_currState, l.cell_tempState, &l.cell_coulomb, &l.cell_coulomb_mah);                               // NOLINT
+
+    if (parsed != 10) {
+      ESP_LOGE(TAG, "invalid line: found only %d, should be 10 items. in line %d\n: %s",
                     parsed, l.cell_num, buffer.substr(0, buffer.size() - 2).c_str());
       return;
     }
@@ -397,9 +431,9 @@ void PytesEBoxComponent::processData_pwrLine(std::string &buffer) {
   if (isdigit(buffer[0]) && (buffer.find("Absent") == -1)) {
   PytesEBoxListener::pwr_LineContents l{};
   const int parsed = sscanf(                                                                                      // NOLINT
-    buffer.c_str(),"%d %d %d %d %d %d %d %d %7s %7s %7s %7s %d%% %d-%d-%d %d:%d:%d %s %s %s %s",                  // NOLINT
+    buffer.c_str(),"%d %d %d %d %d %d %d %d %7s %7s %7s %7s %d%% %d-%d-%d %d:%d:%d %7s %7s %59s %59s",            // NOLINT
     &l.bat_num, &l.voltage, &l.current, &l.temperature, &l.tlow, &l.thigh, &l.vlow, &l.vhigh,                     // NOLINT
-    l.base_st, l.volt_st, l.curr_st, l.temp_st, &l.coulomb, &l.day, &l.month, &l.year, &l.hour,                   // NOLINT
+    l.base_st, l.volt_st, l.curr_st, l.temp_st, &l.coulomb, &l.year, &l.month, &l.day, &l.hour,                   // NOLINT
     &l.min, &l.sec, l.bv_st, l.bt_st,l.serial_st ,l.devtype_st);                                                  // NOLINT
 
     std::string line = std::string("  Buffer: ") + buffer;
@@ -470,74 +504,110 @@ pwr_data_l.bat_num = bat_num;
   }
 
   if (this->buffer_[this->buffer_index_read_].rfind("Barcode:", 0) == 0) {
-    sscanf(this->buffer_[this->buffer_index_read_].c_str()," Barcode: %[^\n]",pwr_data_l.Barcode);
+    sscanf(this->buffer_[this->buffer_index_read_].c_str()," Barcode: %17[^\n]",pwr_data_l.Barcode);
     ESP_LOGV(TAG,"%s -> %s",this->buffer_[this->buffer_index_read_].c_str(),pwr_data_l.Barcode);
   }
 
 
   if (this->buffer_[this->buffer_index_read_].rfind("Firm Version:", 0) == 0) {
-    sscanf(this->buffer_[this->buffer_index_read_].c_str(),"Firm Version: %[^\n\r]",pwr_data_l.FirmVersion); 
+    sscanf(this->buffer_[this->buffer_index_read_].c_str(),"Firm Version: %59[^\n\r]",pwr_data_l.FirmVersion);
     ESP_LOGV(TAG,"%s -> %s",this->buffer_[this->buffer_index_read_].c_str(),pwr_data_l.FirmVersion);
 
   }
 
   if (this->buffer_[this->buffer_index_read_].rfind("Coul. Status:", 0) == 0) {
-    sscanf(this->buffer_[this->buffer_index_read_].c_str(),"Coul. Status: %[^\n]",pwr_data_l.CoulStatus);
+    sscanf(this->buffer_[this->buffer_index_read_].c_str(),"Coul. Status: %17[^\n]",pwr_data_l.CoulStatus);
     ESP_LOGV(TAG,"%s -> %s",this->buffer_[this->buffer_index_read_].c_str(),pwr_data_l.CoulStatus);
   }
 
   if (this->buffer_[this->buffer_index_read_].rfind("Bat Status:", 0) == 0) {
-    sscanf(this->buffer_[this->buffer_index_read_].c_str(),"Bat Status: %[^\n]",pwr_data_l.BatStatus);
+    sscanf(this->buffer_[this->buffer_index_read_].c_str(),"Bat Status: %17[^\n]",pwr_data_l.BatStatus);
     ESP_LOGV(TAG,"%s -> %s",this->buffer_[this->buffer_index_read_].c_str(),pwr_data_l.BatStatus);
   }
 
   
   if (this->buffer_[this->buffer_index_read_].rfind("CMOS Status:", 0) == 0) {
-    sscanf(this->buffer_[this->buffer_index_read_].c_str()," CMOS Status: %[^\n]",pwr_data_l.CMOSStatus);
+    sscanf(this->buffer_[this->buffer_index_read_].c_str()," CMOS Status: %17[^\n]",pwr_data_l.CMOSStatus);
     ESP_LOGV(TAG,"%s -> %s",this->buffer_[this->buffer_index_read_].c_str(),pwr_data_l.CMOSStatus);
 
   }
 
   if (this->buffer_[this->buffer_index_read_].rfind("DMOS Status:", 0) == 0) {
-    sscanf(this->buffer_[this->buffer_index_read_].c_str()," DMOS Status: %[^\n]",pwr_data_l.DMOSStatus);
+    sscanf(this->buffer_[this->buffer_index_read_].c_str()," DMOS Status: %17[^\n]",pwr_data_l.DMOSStatus);
     ESP_LOGV(TAG,"%s -> %s",this->buffer_[this->buffer_index_read_].c_str(),pwr_data_l.DMOSStatus);
   }
 
   
   if (this->buffer_[this->buffer_index_read_].rfind("Bat Protect ENA :", 0) == 0) {
-    sscanf(this->buffer_[this->buffer_index_read_].c_str()," Bat Protect ENA : %[^\n]",pwr_data_l.BatProtectENA);
+    sscanf(this->buffer_[this->buffer_index_read_].c_str()," Bat Protect ENA : %59[^\n]",pwr_data_l.BatProtectENA);
     ESP_LOGV(TAG,"%s -> %s",this->buffer_[this->buffer_index_read_].c_str(),pwr_data_l.BatProtectENA);
   }
     
   if (this->buffer_[this->buffer_index_read_].rfind("Pwr Protect ENA :", 0) == 0) {
-    sscanf(this->buffer_[this->buffer_index_read_].c_str()," Pwr Protect ENA : %[^\n]",pwr_data_l.PwrProtectENA);
+    sscanf(this->buffer_[this->buffer_index_read_].c_str()," Pwr Protect ENA : %59[^\n]",pwr_data_l.PwrProtectENA);
     ESP_LOGV(TAG,"%s -> %s",this->buffer_[this->buffer_index_read_].c_str(),pwr_data_l.PwrProtectENA);
   }
     
   if (this->buffer_[this->buffer_index_read_].rfind("Bat Events:", 0) == 0) {
-    sscanf(this->buffer_[this->buffer_index_read_].c_str()," Bat Events: %[^\n]",pwr_data_l.BatEvents);
+    sscanf(this->buffer_[this->buffer_index_read_].c_str()," Bat Events: %7[^\n]",pwr_data_l.BatEvents);
     ESP_LOGV(TAG,"%s -> %s",this->buffer_[this->buffer_index_read_].c_str(),pwr_data_l.BatEvents);
 
   }
 
   if (this->buffer_[this->buffer_index_read_].rfind("Power Events:", 0) == 0) {
-    sscanf(this->buffer_[this->buffer_index_read_].c_str()," Power Events: %[^\n]",pwr_data_l.PowerEvents);
+    sscanf(this->buffer_[this->buffer_index_read_].c_str()," Power Events: %7[^\n]",pwr_data_l.PowerEvents);
     ESP_LOGV(TAG,"%s -> %s",this->buffer_[this->buffer_index_read_].c_str(),pwr_data_l.PowerEvents);
   }
 
   if (this->buffer_[this->buffer_index_read_].rfind("System Fault:", 0) == 0) {
-    sscanf(this->buffer_[this->buffer_index_read_].c_str()," System Fault: %[^\n]",pwr_data_l.SystemFault);
+    sscanf(this->buffer_[this->buffer_index_read_].c_str()," System Fault: %7[^\n]",pwr_data_l.SystemFault);
     ESP_LOGV(TAG,"%s -> %s",this->buffer_[this->buffer_index_read_].c_str(),pwr_data_l.SystemFault);
   }
 
   if (this->buffer_[this->buffer_index_read_].rfind("DevType:", 0) == 0) {
-    sscanf(this->buffer_[this->buffer_index_read_].c_str()," DevType: %[^\n]",pwr_data_l.DevType);
+    sscanf(this->buffer_[this->buffer_index_read_].c_str()," DevType: %17[^\n]",pwr_data_l.DevType);
     ESP_LOGV(TAG,"%s -> %s",this->buffer_[this->buffer_index_read_].c_str(),pwr_data_l.DevType);
   }
 
   //ESP_LOGD(TAG,"%s",this->buffer_[this->buffer_index_read_].c_str());
 
 
+}
+
+void PytesEBoxComponent::processData_pwrsysLine(std::string &buffer) {
+  // Parsed from the RAW line (e.g. " System Volt              : 53593    mV").
+  // The whitespace in each format string absorbs the padded key/colon, and
+  // %u/%d stops at the space before the unit -- so numeric-prefixed units like
+  // "100WH" can't contaminate the value (the earlier whitespace-collapse glued
+  // "1216     100WH" into "1216100"). A == 1 return means the key matched on
+  // this line, which also disambiguates e.g. "Highest voltage" from the
+  // separate "Highest voltage num" line.
+  const char *b = buffer.c_str();
+  if (sscanf(b, " System Volt : %u", &pwrsys_l.sys_voltage) == 1) {
+    ESP_LOGV(TAG, "%s -> %u", b, pwrsys_l.sys_voltage);
+  } else if (sscanf(b, " System Curr : %d", &pwrsys_l.sys_current) == 1) {
+    ESP_LOGV(TAG, "%s -> %d", b, pwrsys_l.sys_current);
+  } else if (sscanf(b, " System RC : %u", &pwrsys_l.sys_rc) == 1) {
+    ESP_LOGV(TAG, "%s -> %u", b, pwrsys_l.sys_rc);
+  } else if (sscanf(b, " System FCC : %u", &pwrsys_l.sys_fcc) == 1) {
+    ESP_LOGV(TAG, "%s -> %u", b, pwrsys_l.sys_fcc);
+  } else if (sscanf(b, " System SOC : %u", &pwrsys_l.sys_soc) == 1) {
+    ESP_LOGV(TAG, "%s -> %u", b, pwrsys_l.sys_soc);
+  } else if (sscanf(b, " System SOH : %u", &pwrsys_l.sys_soh) == 1) {
+    ESP_LOGV(TAG, "%s -> %u", b, pwrsys_l.sys_soh);
+  } else if (sscanf(b, " Total Power In : %u", &pwrsys_l.total_power_in) == 1) {
+    ESP_LOGV(TAG, "%s -> %u", b, pwrsys_l.total_power_in);
+  } else if (sscanf(b, " Total Power Out : %u", &pwrsys_l.total_power_out) == 1) {
+    ESP_LOGV(TAG, "%s -> %u", b, pwrsys_l.total_power_out);
+  } else if (sscanf(b, " Highest voltage : %u", &pwrsys_l.cell_volt_high) == 1) {
+    ESP_LOGV(TAG, "%s -> %u", b, pwrsys_l.cell_volt_high);
+  } else if (sscanf(b, " Lowest voltage : %u", &pwrsys_l.cell_volt_low) == 1) {
+    ESP_LOGV(TAG, "%s -> %u", b, pwrsys_l.cell_volt_low);
+  } else if (sscanf(b, " Highest temperature : %d", &pwrsys_l.cell_temp_high) == 1) {
+    ESP_LOGV(TAG, "%s -> %d", b, pwrsys_l.cell_temp_high);
+  } else if (sscanf(b, " Lowest temperature : %d", &pwrsys_l.cell_temp_low) == 1) {
+    ESP_LOGV(TAG, "%s -> %d", b, pwrsys_l.cell_temp_low);
+  }
 }
 
 void PytesEBoxComponent::clear_uart_buffer() {
