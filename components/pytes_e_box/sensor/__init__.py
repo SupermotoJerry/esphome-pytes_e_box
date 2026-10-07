@@ -13,7 +13,6 @@ from esphome.const import (
     UNIT_CELSIUS,
     UNIT_PERCENT,
     UNIT_KILOWATT_HOURS,
-    UNIT_WATT_HOURS,
     STATE_CLASS_MEASUREMENT,
     STATE_CLASS_TOTAL_INCREASING,
     DEVICE_CLASS_EMPTY,
@@ -145,19 +144,20 @@ BAT_TYPES: dict[str, cv.Schema] = {
         device_class=DEVICE_CLASS_EMPTY,
         state_class=STATE_CLASS_MEASUREMENT,
     ),
-    # Lifetime energy counters; the E-BOX reports them in WS (watt-seconds).
+    # Lifetime charge counters. LV1 firmware labels them "WS", but they are
+    # ampere-seconds: summed over a stack they match pwrsys's kWh / pack voltage.
     CONF_TOTAL_POWER_IN: sensor.sensor_schema(
         #PytesEBoxBatterySensor,
-        unit_of_measurement=UNIT_WATT_HOURS,
-        accuracy_decimals=0,
-        device_class=DEVICE_CLASS_ENERGY,
+        unit_of_measurement=UNIT_AMPERE_HOURS,
+        accuracy_decimals=1,
+        device_class=DEVICE_CLASS_EMPTY,
         state_class=STATE_CLASS_TOTAL_INCREASING,
     ),
     CONF_TOTAL_POWER_OUT: sensor.sensor_schema(
         #PytesEBoxBatterySensor,
-        unit_of_measurement=UNIT_WATT_HOURS,
-        accuracy_decimals=0,
-        device_class=DEVICE_CLASS_ENERGY,
+        unit_of_measurement=UNIT_AMPERE_HOURS,
+        accuracy_decimals=1,
+        device_class=DEVICE_CLASS_EMPTY,
         state_class=STATE_CLASS_TOTAL_INCREASING,
     ),
     CONF_DEV_DATETIME: sensor.sensor_schema(

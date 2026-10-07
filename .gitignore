@@ -1,3 +1,4 @@
 .env
 examples/esp32c6-pyteslv1.yaml
 logs/debugging_logs
+__pycache__/

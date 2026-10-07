@@ -110,10 +110,10 @@ void PytesEBoxBatterySensor::on_pwrn_line_read(pwr_data_LineContents *line) {
     this->real_coulomb_sensor_->publish_state(((float) line->realCoulomb) / 1000.0f);
   }
   if (this->total_power_in_sensor_ != nullptr) {
-    this->total_power_in_sensor_->publish_state(((float) line->totalPowerIn) / 3600.0f);  // WS -> Wh
+    this->total_power_in_sensor_->publish_state(((float) line->totalPowerIn) / 3600.0f);  // As -> Ah
   }
   if (this->total_power_out_sensor_ != nullptr) {
-    this->total_power_out_sensor_->publish_state(((float) line->totalPowerOut) / 3600.0f);  // WS -> Wh
+    this->total_power_out_sensor_->publish_state(((float) line->totalPowerOut) / 3600.0f);  // As -> Ah
   }
   if (this->work_status_sensor_ != nullptr) {
     this->work_status_sensor_->publish_state(line->workStatus);

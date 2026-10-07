@@ -148,8 +148,8 @@ Configuration variables:
 - **soc_voltageh** (*Optional*): -- All options from [Sensor](https://esphome.io/components/sensor/#config-sensor).
 - **total_coulomb** (*Optional*): -- All options from [Sensor](https://esphome.io/components/sensor/#config-sensor).
 - **real_coulomb** (*Optional*): Real capacity, in Ah. All options from [Sensor](https://esphome.io/components/sensor/#config-sensor).
-- **total_power_in** (*Optional*): Lifetime energy charged into the battery, in Wh. All options from [Sensor](https://esphome.io/components/sensor/#config-sensor).
-- **total_power_out** (*Optional*): Lifetime energy discharged from the battery, in Wh. All options from [Sensor](https://esphome.io/components/sensor/#config-sensor).
+- **total_power_in** (*Optional*): Lifetime charge into the battery, in Ah (the firmware labels it "WS", but it is ampere-seconds). For energy in kWh use `system_power_in`. All options from [Sensor](https://esphome.io/components/sensor/#config-sensor).
+- **total_power_out** (*Optional*): Lifetime charge out of the battery, in Ah (the firmware labels it "WS", but it is ampere-seconds). For energy in kWh use `system_power_out`. All options from [Sensor](https://esphome.io/components/sensor/#config-sensor).
 - **work_status** (*Optional*): -- All options from [Sensor](https://esphome.io/components/sensor/#config-sensor).
 - **cell_count** (*Optional*): -- All options from [Sensor](https://esphome.io/components/sensor/#config-sensor).
 
