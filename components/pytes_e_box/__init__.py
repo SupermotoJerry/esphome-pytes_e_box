@@ -106,8 +106,8 @@ CONFIG_SCHEMA = cv.All(
         {
             cv.GenerateID(): cv.declare_id(PytesEBoxComponent),
             cv.Required(CONF_BATTERIES_COMPONENT): CV_NUM_BATTERIES,
-            cv.Required(CONF_POLL_TIMEOUT): cv.positive_time_period_milliseconds,
-            cv.Optional(CONF_CMD_IDLE_TIME): cv.positive_time_period_milliseconds,
+            cv.Optional(CONF_POLL_TIMEOUT, default="4s"): cv.positive_time_period_milliseconds,
+            cv.Optional(CONF_CMD_IDLE_TIME, default="150ms"): cv.positive_time_period_milliseconds,
         }
     )
     .extend(cv.polling_component_schema("15s"))

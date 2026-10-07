@@ -105,10 +105,10 @@ Configuration variables:
 ------------------------
 - **id** (***Required***): The id to use for this PytesEbox component.
 - **uart_id** (*Optional*): The uart Bus ID.
-- **batteries** (***Required***): Amount of Batteries. Defaults to ``1``
-- **update_interval** (*Optional*): The interval to check the sensor. Defaults to ``60s``.
-- **poll_timeout** (*Optional*): --. Defaults to ``4s``.
-- **command_idle_time** (*Optional*): --. Defaults to ``150ms``. 
+- **batteries** (***Required***): Amount of Batteries (1-16).
+- **update_interval** (*Optional*): The interval to check the sensor. Defaults to ``15s``.
+- **poll_timeout** (*Optional*): Maximum time to wait for one command's response before moving on. Defaults to ``4s``.
+- **command_idle_time** (*Optional*): Minimum time between sending consecutive commands. Defaults to ``150ms``.
 
 Sensor
 ------
@@ -147,9 +147,9 @@ Configuration variables:
 - **voltage_high** (*Optional*): Voltage of the highest cell. All options from [Sensor](https://esphome.io/components/sensor/#config-sensor).
 - **soc_voltageh** (*Optional*): -- All options from [Sensor](https://esphome.io/components/sensor/#config-sensor).
 - **total_coulomb** (*Optional*): -- All options from [Sensor](https://esphome.io/components/sensor/#config-sensor).
-- **real_coulomb** (*Optional*): -- All options from [Sensor](https://esphome.io/components/sensor/#config-sensor).
-- **total_power_in** (*Optional*): -- All options from [Sensor](https://esphome.io/components/sensor/#config-sensor).
-- **total_power_out** (*Optional*): -- All options from [Sensor](https://esphome.io/components/sensor/#config-sensor).
+- **real_coulomb** (*Optional*): Real capacity, in Ah. All options from [Sensor](https://esphome.io/components/sensor/#config-sensor).
+- **total_power_in** (*Optional*): Lifetime energy charged into the battery, in Wh. All options from [Sensor](https://esphome.io/components/sensor/#config-sensor).
+- **total_power_out** (*Optional*): Lifetime energy discharged from the battery, in Wh. All options from [Sensor](https://esphome.io/components/sensor/#config-sensor).
 - **work_status** (*Optional*): -- All options from [Sensor](https://esphome.io/components/sensor/#config-sensor).
 - **cell_count** (*Optional*): -- All options from [Sensor](https://esphome.io/components/sensor/#config-sensor).
 

@@ -186,11 +186,10 @@ public:
 }
   void clear_uart_buffer(); 
 protected:
-  static const size_t COMMAND_QUEUE_LENGTH = 34; //16Boxes with 16 Batterys and one index. 
-  int battaries_in_system_;
-  uint32_t polling_timeout_;
-  uint32_t command_idle_time_;
-  uint32_t found_battaries_in_system_;
+  int battaries_in_system_ = 0;
+  uint32_t polling_timeout_ = 4000;
+  uint32_t command_idle_time_ = 150;
+  uint32_t found_battaries_in_system_ = 0;
   uint32_t last_poll_ = 0;
   uint32_t command_retries_ = 0;
 
@@ -224,6 +223,11 @@ protected:
   PytesEBoxListener::bat_index_LineContents  bat_index_l{};
   PytesEBoxListener::pwr_data_LineContents pwr_data_l{};
   PytesEBoxListener::pwrsys_LineContents pwrsys_l{};
+  // Number of pwrsys fields parsed from the current response. 0 means the
+  // command failed (e.g. "Invalid command" after the E-BOX left debug mode).
+  uint8_t pwrsys_fields_parsed_ = 0;
+  // Set when pwrsys failed; "login debug" is re-sent once the queue finishes.
+  bool relogin_pending_ = false;
   
   void add_polling_command_(const char *command, int _index, ENUMCommand polling_command);
   std::vector<PollingCommand> cmd_queue_{};

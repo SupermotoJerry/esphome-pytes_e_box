@@ -101,7 +101,7 @@ void PytesEBoxComponent::setup() {
 
 void PytesEBoxComponent::add_polling_command_(const char *command, int _index, ENUMCommand polling_command) {
   for (auto &_command : this->cmd_queue_) {
-    if (_command.command.c_str() == command) {
+    if (_command.command == command) {
       //already added, just to be sure we wont take more we need.
       return;
       }
@@ -155,6 +155,7 @@ uint8_t PytesEBoxComponent::send_next_command_() {
     this->bat_index_l = {};
     this->pwr_data_l = {};
     this->pwrsys_l = {};
+    this->pwrsys_fields_parsed_ = 0;
     this->write_str(this->cmd_queue_[this->command_queue_position_].command.c_str());
     this->write_str("\n");
     this->last_poll_ = millis();
@@ -214,7 +215,6 @@ void PytesEBoxComponent::loop() {
            elapsed);
            
       this->clear_uart_buffer();
-      //this->command_queue_position_ = (this->command_queue_position_+1) % COMMAND_QUEUE_LENGTH;
       this->state_ = STATE_SEND_NEXT_COMMAND;
       if (this->command_queue_position_ == this->command_queue_max_) { this->state_ = STATE_IDLE; } //this->command_queue_position_ = 0;}
       return;
@@ -228,10 +228,17 @@ void PytesEBoxComponent::loop() {
     return;
   }
 
-    this->command_queue_position_ = (this->command_queue_position_+1) % COMMAND_QUEUE_LENGTH;
-    if (this->command_queue_position_ == this->command_queue_max_) {
+    this->command_queue_position_++;
+    if (this->command_queue_position_ >= this->command_queue_max_) {
       this->state_ = STATE_IDLE;
       ESP_LOGI(TAG, "PytesEBox command queue done.");
+      if (this->relogin_pending_) {
+        // Sent while idle so the reply has the whole update_interval to arrive
+        // and is discarded by the clear_uart_buffer() of the next poll.
+        this->write_str("login debug\n");
+        this->relogin_pending_ = false;
+        ESP_LOGW(TAG, "Re-sent 'login debug' to restore debug mode");
+      }
       return;
       }
     if (this->send_next_command_() == 0) {
@@ -257,7 +264,9 @@ void PytesEBoxComponent::loop() {
           break;
           }
         case CMD_PWRSYS: {
-          listener->on_pwrsys_line_read(&pwrsys_l);
+          if (this->pwrsys_fields_parsed_ > 0) {
+            listener->on_pwrsys_line_read(&pwrsys_l);
+          }
           break;
           }
         case CMD_BAT:
@@ -268,6 +277,10 @@ void PytesEBoxComponent::loop() {
           break;
       }
   }
+    if (_last_cmd == CMD_PWRSYS && this->pwrsys_fields_parsed_ == 0) {
+      ESP_LOGW(TAG, "pwrsys returned no data (E-BOX not in debug mode?), skipping publish");
+      this->relogin_pending_ = true;
+    }
     this->state_ = STATE_SEND_NEXT_COMMAND;
     ESP_LOGVV(TAG, "Command Complete, switch to STATE_POLL_COMPLETE");
     if (this->command_queue_position_ == this->command_queue_max_) { this->state_ = STATE_IDLE; ESP_LOGVV(TAG, "Command Complete, switch to STATE_IDLE"); }
@@ -347,7 +360,7 @@ void PytesEBoxComponent::loop() {
   /** read command we send */
   if (this->state_ == STATE_POLL_COMPLETE) {
       _last_cmd = this->readCommand(this->buffer_[0]);
-      if (_last_cmd != CMD_NIL || _last_cmd != CMD_ERROR) {
+      if (_last_cmd != CMD_NIL && _last_cmd != CMD_ERROR) {
       this->state_ = STATE_POLL_DECODED;
       this->buffer_[0].clear();
       this->buffer_[1].clear();
@@ -583,6 +596,7 @@ void PytesEBoxComponent::processData_pwrsysLine(std::string &buffer) {
   // this line, which also disambiguates e.g. "Highest voltage" from the
   // separate "Highest voltage num" line.
   const char *b = buffer.c_str();
+  bool matched = true;
   if (sscanf(b, " System Volt : %u", &pwrsys_l.sys_voltage) == 1) {
     ESP_LOGV(TAG, "%s -> %u", b, pwrsys_l.sys_voltage);
   } else if (sscanf(b, " System Curr : %d", &pwrsys_l.sys_current) == 1) {
@@ -607,6 +621,11 @@ void PytesEBoxComponent::processData_pwrsysLine(std::string &buffer) {
     ESP_LOGV(TAG, "%s -> %d", b, pwrsys_l.cell_temp_high);
   } else if (sscanf(b, " Lowest temperature : %d", &pwrsys_l.cell_temp_low) == 1) {
     ESP_LOGV(TAG, "%s -> %d", b, pwrsys_l.cell_temp_low);
+  } else {
+    matched = false;
+  }
+  if (matched) {
+    this->pwrsys_fields_parsed_++;
   }
 }
 
